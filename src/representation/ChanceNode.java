@@ -24,7 +24,7 @@ public class ChanceNode extends Node {
 	}
 	@Override
     public Node chooseNext() {
-        // Simulez un événement aléatoire en utilisant la classe Random.
+        // Simulez un événement aléatoire
         Random random = new Random();
         int randomChoice = random.nextInt(nextNodes.size());
 

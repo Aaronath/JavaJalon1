@@ -12,24 +12,33 @@ public class Main {
     	
     	Player player = new Player("Moi", 0, Weapon.SABER);
     	Monster monster = new Monster("Monstre", 70, null);
+    	
+    	Node currentNode = null;
+        DecisionNode startNode = new DecisionNode(1,"Veux-tu faire ton aventure : \n 1) En solo \n 2) Avec ton meilleur ami" );
+        DecisionNode startNode2 = new DecisionNode(1,"Veux-tu faire ta carrière :\n \n 1) En écrasant les autres \n 2) En te faisant un maximum d'alliés" );
         
-        // Début de l'histoire
-        System.out.println("Bienvenue dans le monde des pirates !");
-        System.out.println("Choisissez votre destin :");
-        System.out.println("1. Devenir un pirate");
-        System.out.println("2. Autre choix (non implémenté pour l'instant)");
-
         Scanner scanner = new Scanner(System.in);
+        // Début de l'histoire
+        displayText("Bienvenue dans le monde des pirates !");
+        displayText("Très bien ! Par quel petit surnom voulez vous vous appeler ? :");
+        String pseudoJoueur = scanner.nextLine();
+        displayText("Choisissez votre destin :");
+        displayText("1. Devenir un pirate");
+        displayText("2. S'engager dans la Marine");
+
         int userChoice = scanner.nextInt();
 
         switch (userChoice) {
             case 1:
                 // Choix de devenir un pirate
-                player = new Player("Joueur", 80, Weapon.SWORD); // Le joueur commence en tant que Pirate Rookie        
+                player = new Player(pseudoJoueur, 80, Weapon.SWORD); // Le joueur commence en tant que Pirate Rookie   
+                currentNode = startNode;
                 break;
 
             case 2:
-                // Autre choix (non implémenté pour l'instant)
+                // Choix de devenir Marine
+            	player = new Player(pseudoJoueur, 80, Weapon.GUN); // Le joueur commence en tant que Pirate Rookie   
+                currentNode = startNode2;
                 break;
 
             default:
@@ -38,7 +47,6 @@ public class Main {
         }
 
         //Création des Nodes relatives au choix Pirate
-        DecisionNode startNode = new DecisionNode(1,"Veux-tu faire ton aventure : \n 1) En solo \n 2) Avec ton meilleur ami" );
         InnerNode soloNode = new InnerNode(2, "Tu es donc solo ! Tu pars en mer à bord de ton radeau !");
         InnerNode duoNode = new InnerNode(3, "Tu as raison, l'aventure c'est toujours mieux avec un ami !");
         DecisionNode monsterNode = new DecisionNode(4, "Un monstre marin surgit hors de l'eau ! Que vas-tu faire : \n 1) Fuir \n 2) Combattre");
@@ -61,10 +69,53 @@ public class Main {
         logueTownNode.setNextNodes(Arrays.asList(terminalNode));
         whiskyPeakNode.setNextNodes(Arrays.asList(terminalNode));
 
+        //Choix marine
+        
+        InnerNode soloNode2 = new InnerNode(2, "Tu préfères donc la voie de  et de la puissance !\n"
+        		+ "\nTu es tomber sur un power up !\n"
+        		+ "\nTu commences par un entrainement très difficile !\n");
+        InnerNode teamNode = new InnerNode(3, "Tu fais un choix judicieux !"
+        		+ "Tu ne pourras pas être très puissant,\n"
+        		+ "mais tu auras des alliés fidèles\n"
+        		+ " pour t'aider à tout instant !\n");
+        InnerNode missionNode = new InnerNode(4, "Un village se fait attaquer par des pirates.\n"
+        		+ "Tu es immédiatement appeler en mission pour sauver ces innocents !");
+        CombatNode vsPirateNode = new CombatNode(5,"Tu arrives sur place,"
+        		+ "un pirate te barre la route, tu le combat vigoureusement !",null,monster,player) ;
+        DecisionNode heroNode = new DecisionNode(6,"Tu es gravement blessé, tu as besoin de soin d'urgence.\n"
+        		+ "Soudain un garçon te barre la route, te supplie d'aller aider sa mère\n"
+        		+ " qui se fait violencer par un pirate.\n"
+        		+ "\n Que choisis tu ? :"
+        		+ "\n1) Aller combattre au péril de ta vie"
+        		+ "\n2) Ta vie est plus importante. Tu fuis. ");
+        
+        InnerNode momNode = new InnerNode(7, "Tu as fais le choix d'aller aider"
+        		+ "\n Tu arrives sur place, le pirate prends peur en te voyant."
+        		+ "\nTu es trop puissant pour lui, tu le tue avec une balle dans le crâne.\n");
+        
+        TerminalNode deathNode = new TerminalNode(8, "En fuyant, tu te retrouves face au capitaine de l'équipage.\n"
+        		+ "Tu essaies de te battre tant bien que mal mais..."
+        		+ "\n D'un coup d'épée il te coupe la tête !"
+        		+ "\n \n Votre aventure s'arrête ici !");
+        TerminalNode fin = new TerminalNode(9,"\nTu revNiens de ta mission héroique, acclamé par les foules.\n"
+        		+ "\nAu paroxysme des célébrations, tu es nommée par ton chef comme Amiral pour ton courage et ta bravo."
+        		+ "\n Tu as désormais atteint ton objectifs, tu es désormais au sommet de la marine !"
+        		+ "\n Félicitation !");
+        
+                 
+
+                
+        //Graphe de l'histoire marine
+        startNode2.setNextNodes(Arrays.asList(soloNode2, teamNode));
+        soloNode2.setNextNodes(Arrays.asList(missionNode));
+        teamNode.setNextNodes(Arrays.asList(missionNode));
+        missionNode.setNextNodes(Arrays.asList(vsPirateNode));
+        vsPirateNode.setNextNodes(Arrays.asList(heroNode));
+        heroNode.setNextNodes(Arrays.asList(momNode,deathNode));
+        momNode.setNextNodes(Arrays.asList(fin));
             
 
          // Simulation de l'histoire
-         Node currentNode = startNode;
          
         while (!(currentNode instanceof TerminalNode)) {
             currentNode.display();
@@ -151,6 +202,20 @@ public class Main {
         System.out.println("Power Level de l'équipage : " + totalCrewPowerLevel);
 
         return totalCrewPowerLevel;
+    }
+    
+    private static void displayText(String text) {
+        char[] descriptionChars = text.toCharArray();
+
+        for (char c : descriptionChars) {
+            System.out.print(c);
+            try {
+                Thread.sleep(15); // Délai de 100 millisecondes entre chaque caractère
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println(); // Nouvelle ligne à la fin
     }
 }
 

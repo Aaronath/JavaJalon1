@@ -16,7 +16,7 @@ public abstract class Pirate extends Character {
 	}
     
 	public int getPowerLevelBonus() {
-	    // Logique spécifique à chaque classe de Pirate
+	    // Logique spécifique à chaque classe de Pirate, par défaut retourne 0 bonus
 	    return 0;
 	}
 }

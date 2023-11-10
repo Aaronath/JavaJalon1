@@ -35,14 +35,14 @@ public class CombatNode extends InnerNode {
 	
 	public boolean combatNext() {
 	    // Affiche les informations sur l'opposant
-	    System.out.println("Vous êtes confronté à " + opponent.getName() + ", un redoutable ennemi !");
-	    System.out.println("Power Level de l'adversaire : " + opponent.getPowerLevel());
-	    System.out.println("Arme de l'adversaire : " + opponent.getWeapon());
+	    displayText("Vous êtes confronté à " + opponent.getName() + ", un redoutable ennemi !");
+	    displayText("Power Level de l'adversaire : " + opponent.getPowerLevel());
+	    displayText("Arme de l'adversaire : " + opponent.getWeapon());
 
 	    // Affiche les options de combat
-	    System.out.println("Choisissez votre action :");
-	    System.out.println("1. Attaquer avec votre arme");
-	    System.out.println("2. Utiliser une compétence spéciale (non implémenté pour l'instant)");
+	    displayText("Choisissez votre action :");
+	    displayText("1. Attaquer avec votre arme");
+	    displayText("2. Utiliser une compétence spéciale (non implémenté pour l'instant)");
 
 	    Scanner scanner = new Scanner(System.in);
 	    int userChoice = scanner.nextInt();
@@ -66,10 +66,10 @@ public class CombatNode extends InnerNode {
 	private boolean determineCombatOutcome() {
 	    // Logique pour déterminer l'issue du combat
 	    if (opponent.getPowerLevel() > player.getPowerLevel()) {
-	        System.out.println("Votre attaque n'a pas suffi ! L'adversaire contre-attaque !\n Vous êtes vaincu. Fin de l'histoire. ");
+	        displayText("Votre attaque n'a pas suffi ! L'adversaire contre-attaque !\n Vous êtes vaincu. Fin de l'histoire. ");
 	        return false;
 	    } else {
-	        System.out.println("Vous remportez le combat ! L'adversaire est battu.");
+	        displayText("Vous remportez le combat ! L'adversaire est battu.");
 	        return true;
 	    }
 	}
@@ -79,10 +79,10 @@ public class CombatNode extends InnerNode {
 	    int playerTotalPowerLevel = player.getPowerLevel() + player.getPowerLevelBonus();
 
 	    if (opponent.getPowerLevel() > playerTotalPowerLevel) {
-	        System.out.println("Votre attaque n'a pas suffi ! L'adversaire contre-attaque !\n Vous êtes vaincu. Fin de l'histoire. ");
+	        displayText("Votre attaque n'a pas suffi ! L'adversaire contre-attaque !\n Vous êtes vaincu. Fin de l'histoire. ");
 	        return false;
 	    } else {
-	        System.out.println("Vous remportez le combat ! L'adversaire est battu.");
+	        displayText("Vous remportez le combat ! L'adversaire est battu.");
 	        return true;
 	    }
 	}
@@ -94,6 +94,20 @@ public class CombatNode extends InnerNode {
 	@Override
     public Node chooseNext() {
         return nextNodes.get(0);
+    }
+	
+	private static void displayText(String text) {
+        char[] descriptionChars = text.toCharArray();
+
+        for (char c : descriptionChars) {
+            System.out.print(c);
+            try {
+                Thread.sleep(15); // Délai de 100 millisecondes entre chaque caractère
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println(); // Nouvelle ligne à la fin
     }
 
 }
