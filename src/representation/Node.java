@@ -10,7 +10,17 @@ public abstract class Node {
     }
 
     public void display() {
-        System.out.println(description);
+        char[] descriptionChars = description.toCharArray();
+
+        for (char c : descriptionChars) {
+            System.out.print(c);
+            try {
+                Thread.sleep(15); // Délai de 100 millisecondes entre chaque caractère
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println(); // Nouvelle ligne à la fin
     }
 
     public String getDescription() {
