@@ -1,6 +1,11 @@
 import representation.*;
 import univers.*;
 import univers.Character;
+import univers.Pirate.Monster;
+import univers.Pirate.Pirate;
+import univers.Pirate.PirateCaptain;
+import univers.Pirate.PirateRookie;
+import univers.Pirate.PirateSupernova;
 
 import java.util.Arrays;
 import java.util.List;

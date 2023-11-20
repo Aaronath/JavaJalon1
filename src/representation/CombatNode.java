@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import univers.*;
 import univers.Character;
+import univers.Pirate.Pirate;
 
 public class CombatNode extends InnerNode {
     private Pirate opponent;
