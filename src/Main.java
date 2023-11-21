@@ -6,6 +6,7 @@ import univers.Pirate.Pirate;
 import univers.Pirate.PirateCaptain;
 import univers.Pirate.PirateRookie;
 import univers.Pirate.PirateSupernova;
+import fonctionGeneral.Utils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +15,10 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
+
+
+        break;
     	
     	Player player = new Player("Moi", 0, Weapon.SABER);
     	Monster monster = new Monster("Monstre", 70, null);
@@ -24,19 +29,20 @@ public class Main {
         
         Scanner scanner = new Scanner(System.in);
         // Début de l'histoire
-        displayText("Bienvenue dans le monde des pirates !");
-        displayText("Très bien ! Par quel petit surnom voulez vous vous appeler ? :");
+        Utils.displayText("Bienvenue dans le monde des pirates !");
+        Utils.displayText("Très bien ! Par quel petit surnom voulez vous vous appeler ? :");
         String pseudoJoueur = scanner.nextLine();
-        displayText("Choisissez votre destin :");
-        displayText("1. Devenir un pirate");
-        displayText("2. S'engager dans la Marine");
+        Utils.displayText("Choisissez votre destin :");
+        Utils.displayText("1. Devenir un pirate");
+        Utils.displayText("2. S'engager dans la Marine");
 
         int userChoice = scanner.nextInt();
 
         switch (userChoice) {
             case 1:
                 // Choix de devenir un pirate
-                player = new Player(pseudoJoueur, 80, Weapon.SWORD); // Le joueur commence en tant que Pirate Rookie   
+                PirateRookie pirateR = new PirateRookie(pseudoJoueur, userChoice, null)
+                player = new Player(pseudoJoueur, 80, Weapon.SWORD,); // Le joueur commence en tant que Pirate Rookie   
                 currentNode = startNode;
                 break;
 
@@ -47,7 +53,7 @@ public class Main {
                 break;
 
             default:
-                System.out.println("Choix non valide. Fin de l'histoire.");
+                Utils.displayText("Choix non valide. Fin de l'histoire.");
                 return;
         }
 
@@ -130,7 +136,7 @@ public class Main {
                 Weapon playerWeapon = choosePlayerWeapon();
                 int playerPowerLevel = calculatePlayerPowerLevel(playerWeapon)+ player.getPowerLevel();
                 player.setPowerLevel(playerPowerLevel);
-                System.out.println("Votre Power Level : " + player.getPowerLevel());
+                Utils.displayText("Votre Power Level : " + player.getPowerLevel());
 
                 // Met à jour le powerLevel du joueur en fonction de la classe actuelle
                 player.setPowerLevel(player.getPowerLevel() + player.getPowerLevelBonus());
@@ -150,10 +156,10 @@ public class Main {
     }
 
     private static Weapon choosePlayerWeapon() {
-        System.out.println("Choisissez votre arme :");
-        System.out.println("1. Épée");
-        System.out.println("2. Fusil");
-        System.out.println("3. Sabre");
+        Utils.displayText("Choisissez votre arme :");
+        Utils.displayText("1. Épée");
+        Utils.displayText("2. Fusil");
+        Utils.displayText("3. Sabre");
 
         Scanner scanner = new Scanner(System.in);
         int weaponChoice = scanner.nextInt();
@@ -169,7 +175,7 @@ public class Main {
                 return Weapon.SABER;
 
             default:
-                System.out.println("Choix non valide. Utilisation de l'épée par défaut.");
+                Utils.displayText("Choix non valide. Utilisation de l'épée par défaut.");
                 return Weapon.SWORD;
         }
     }
@@ -204,23 +210,9 @@ public class Main {
             totalCrewPowerLevel += crewMember.getPowerLevel();
         }
 
-        System.out.println("Power Level de l'équipage : " + totalCrewPowerLevel);
+        Utils.displayText("Power Level de l'équipage : " + totalCrewPowerLevel);
 
         return totalCrewPowerLevel;
-    }
-    
-    private static void displayText(String text) {
-        char[] descriptionChars = text.toCharArray();
-
-        for (char c : descriptionChars) {
-            System.out.print(c);
-            try {
-                Thread.sleep(15); // Délai de 100 millisecondes entre chaque caractère
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println(); // Nouvelle ligne à la fin
     }
 }
 

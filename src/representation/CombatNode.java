@@ -6,18 +6,19 @@ import java.util.Scanner;
 import univers.*;
 import univers.Character;
 import univers.Pirate.Pirate;
+import fonctionGeneral.Utils;
 
 public class CombatNode extends InnerNode {
     private Pirate opponent;
-    private Character player;
+    private Player player;
 
-    public CombatNode(int id, String description, List<Node> nextNodes, Pirate opponent, Character player) {
+    public CombatNode(int id, String description, List<Node> nextNodes, Pirate opponent, Player player) {
         super(id, description, nextNodes);
         this.opponent = opponent;
         this.player = player;
     }
     
-    public CombatNode(int id, String description, Pirate opponent, Character player) {
+    public CombatNode(int id, String description, Pirate opponent, Player player) {
         super(id, description);
         this.opponent = opponent;
         this.player = player;
@@ -36,14 +37,14 @@ public class CombatNode extends InnerNode {
 	
 	public boolean combatNext() {
 	    // Affiche les informations sur l'opposant
-	    displayText("Vous êtes confronté à " + opponent.getName() + ", un redoutable ennemi !");
-	    displayText("Power Level de l'adversaire : " + opponent.getPowerLevel());
-	    displayText("Arme de l'adversaire : " + opponent.getWeapon());
+	    Utils.displayText("Vous êtes confronté à " + opponent.getName() + ", un redoutable ennemi !");
+	    Utils.displayText("Power Level de l'adversaire : " + opponent.getPowerLevel());
+	    Utils.displayText("Arme de l'adversaire : " + opponent.getWeapon());
 
 	    // Affiche les options de combat
-	    displayText("Choisissez votre action :");
-	    displayText("1. Attaquer avec votre arme");
-	    displayText("2. Utiliser une compétence spéciale (non implémenté pour l'instant)");
+	    Utils.displayText("Choisissez votre action :");
+	    Utils.displayText("1. Attaquer avec votre arme");
+	    Utils.displayText("2. Utiliser une compétence spéciale (non implémenté pour l'instant)");
 
 	    Scanner scanner = new Scanner(System.in);
 	    int userChoice = scanner.nextInt();
@@ -67,10 +68,10 @@ public class CombatNode extends InnerNode {
 	private boolean determineCombatOutcome() {
 	    // Logique pour déterminer l'issue du combat
 	    if (opponent.getPowerLevel() > player.getPowerLevel()) {
-	        displayText("Votre attaque n'a pas suffi ! L'adversaire contre-attaque !\n Vous êtes vaincu. Fin de l'histoire. ");
+	        Utils.displayText("Votre attaque n'a pas suffi ! L'adversaire contre-attaque !\n Vous êtes vaincu. Fin de l'histoire. ");
 	        return false;
 	    } else {
-	        displayText("Vous remportez le combat ! L'adversaire est battu.");
+	        Utils.displayText("Vous remportez le combat ! L'adversaire est battu.");
 	        return true;
 	    }
 	}
@@ -80,10 +81,10 @@ public class CombatNode extends InnerNode {
 	    int playerTotalPowerLevel = player.getPowerLevel() + player.getPowerLevelBonus();
 
 	    if (opponent.getPowerLevel() > playerTotalPowerLevel) {
-	        displayText("Votre attaque n'a pas suffi ! L'adversaire contre-attaque !\n Vous êtes vaincu. Fin de l'histoire. ");
+	        Utils.displayText("Votre attaque n'a pas suffi ! L'adversaire contre-attaque !\n Vous êtes vaincu. Fin de l'histoire. ");
 	        return false;
 	    } else {
-	        displayText("Vous remportez le combat ! L'adversaire est battu.");
+	        Utils.displayText("Vous remportez le combat ! L'adversaire est battu.");
 	        return true;
 	    }
 	}
@@ -97,18 +98,5 @@ public class CombatNode extends InnerNode {
         return nextNodes.get(0);
     }
 	
-	private static void displayText(String text) {
-        char[] descriptionChars = text.toCharArray();
-
-        for (char c : descriptionChars) {
-            System.out.print(c);
-            try {
-                Thread.sleep(15); // Délai de 100 millisecondes entre chaque caractère
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        System.out.println(); // Nouvelle ligne à la fin
-    }
 
 }

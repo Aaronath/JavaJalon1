@@ -6,7 +6,7 @@ import univers.Weapon;
 public abstract class MarineSoldier extends Character {
     protected Weapon weapon;
 
-    public MarineSoldier(String name, int powerLevel, Weapon weapon) {
+    public MarineSoldier(String name, int powerLevel, Weapon weapon, int pv) {
         super(name, powerLevel, weapon);
     }
 
