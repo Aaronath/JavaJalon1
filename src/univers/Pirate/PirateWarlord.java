@@ -8,7 +8,7 @@ public class PirateWarlord extends Pirate {
     }
 
     @Override
-    public void introduceYourself() {
+    public void introduceYourself(String name) {
         System.out.println("Je suis un Corsaire pirate, " + name + ". Mon niveau de puissance est " + powerLevel +
                 " et j'utilise " + weapon + " comme arme.");
     }

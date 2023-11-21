@@ -78,7 +78,7 @@ public class CombatNode extends InnerNode {
 	
 	private boolean determineCombatOutcomeBonus() {
 	    // Logique pour déterminer l'issue du combat en prenant en compte le bonus de powerLevel
-	    int playerTotalPowerLevel = player.getPowerLevel() + player.getPowerLevelBonus();
+	    int playerTotalPowerLevel = player.getPowerLevel();
 
 	    if (opponent.getPowerLevel() > playerTotalPowerLevel) {
 	        Utils.displayText("Votre attaque n'a pas suffi ! L'adversaire contre-attaque !\n Vous êtes vaincu. Fin de l'histoire. ");

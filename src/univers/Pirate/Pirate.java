@@ -7,7 +7,7 @@ public abstract class Pirate extends Character {
     protected Weapon weapon;
 
     public Pirate(String name, int powerLevel, Weapon weapon) {
-        super(name, powerLevel, weapon);
+        super(name,powerLevel, weapon);
     }
 
 	public Weapon getWeapon() {

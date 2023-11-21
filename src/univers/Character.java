@@ -3,18 +3,27 @@ package univers;
 import fonctionGeneral.Utils;
 
 public abstract class Character implements PowerLevel {
+    protected String name;
     protected int powerLevel;
 	protected int pv;
     protected Weapon weapon;
 
-    public Character( int powerLevel, Weapon weapon) {
-        this.powerLevel = powerLevel;
+    public Character(String name,int powerLevel, Weapon weapon) {
+        this.powerLevel = powerLevel + weapon.getPowerLevel();
         this.weapon = weapon;
     }
 
-    public void introduceYourself() {
+    public void introduceYourself(String name) {
         Utils.displayText("Je suis un personnage, " + name + ". Mon niveau de puissance est " + powerLevel +
                 " et j'utilise " + weapon + " comme arme.");
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
 

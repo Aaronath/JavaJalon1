@@ -20,10 +20,12 @@ public class Player implements PowerLevel{
 	private int pvMax;
 	private int pv;
 
-	public Player(String name,Level level,Character character) {
+	public Player(String name,Character character) {
 		this.name = name;
-		this.level = 1;
 		this.character = character;
+
+		// définition des paramètres par défaut
+		this.level = 1;
 		powerLevel = 80 + character.getPowerLevel();
 		pv = 100 + character.getPv();
 		pvMax = pv;
@@ -49,6 +51,10 @@ public class Player implements PowerLevel{
 
 	public void levelUp(int l) {
 		level += l;
+	}
+
+	public Character getCharacter() {
+		return this.character;
 	}
 
 	// Les combats apporte des niveaux au joueur

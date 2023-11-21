@@ -1,6 +1,7 @@
 import representation.*;
 import univers.*;
 import univers.Character;
+import univers.Marine.NouvelleRecrue;
 import univers.Pirate.Monster;
 import univers.Pirate.Pirate;
 import univers.Pirate.PirateCaptain;
@@ -16,12 +17,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-
-
-        break;
-    	
-    	Player player = new Player("Moi", 0, Weapon.SABER);
-    	Monster monster = new Monster("Monstre", 70, null);
+    	Monster monster = new Monster("Monstre", 70, Weapon.DEVIL_FRUIT);
+        Player player;
     	
     	Node currentNode = null;
         DecisionNode startNode = new DecisionNode(1,"Veux-tu faire ton aventure : \n 1) En solo \n 2) Avec ton meilleur ami" );
@@ -30,7 +27,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         // Début de l'histoire
         Utils.displayText("Bienvenue dans le monde des pirates !");
-        Utils.displayText("Très bien ! Par quel petit surnom voulez vous vous appeler ? :");
+        Utils.displayText("Très bien ! Commençons par de brèves présentation, quel est votre nom ? :");
         String pseudoJoueur = scanner.nextLine();
         Utils.displayText("Choisissez votre destin :");
         Utils.displayText("1. Devenir un pirate");
@@ -41,14 +38,24 @@ public class Main {
         switch (userChoice) {
             case 1:
                 // Choix de devenir un pirate
-                PirateRookie pirateR = new PirateRookie(pseudoJoueur, userChoice, null)
-                player = new Player(pseudoJoueur, 80, Weapon.SWORD,); // Le joueur commence en tant que Pirate Rookie   
+                
+                Utils.displayText("On vous attribue un personnage de type pirate ! \n\n");
+                Weapon weapon = choosePlayerWeapon();
+                Utils.displayText("Comment voulez vous nommer votre personnage?");
+                String pseudoPirate = scanner.nextLine();
+                PirateRookie pirate = new PirateRookie(pseudoPirate,30, weapon);
+                player = new Player(pseudoJoueur, pirate); // Le joueur commence en tant que Pirate Rookie   
                 currentNode = startNode;
                 break;
 
             case 2:
                 // Choix de devenir Marine
-            	player = new Player(pseudoJoueur, 80, Weapon.GUN); // Le joueur commence en tant que Pirate Rookie   
+                Utils.displayText("On vous attribue un personnage de type marine ! \n"
+                +"Comment voulez vous le nommer ?");
+                weapon = choosePlayerWeapon();
+                String pseudoMarine = scanner.nextLine();
+            	NouvelleRecrue marine = new NouvelleRecrue(pseudoMarine,30, weapon);
+                player = new Player(pseudoJoueur, marine); // Le joueur commence en tant que Nouvelle recrue   
                 currentNode = startNode2;
                 break;
 
@@ -126,23 +133,20 @@ public class Main {
         momNode.setNextNodes(Arrays.asList(fin));
             
 
-         // Simulation de l'histoire
+        // Simulation de l'histoire
          
         while (!(currentNode instanceof TerminalNode)) {
             currentNode.display();
 
             if (currentNode instanceof CombatNode) {
                 Pirate opponent = ((CombatNode) currentNode).getOpponent();
-                Weapon playerWeapon = choosePlayerWeapon();
-                int playerPowerLevel = calculatePlayerPowerLevel(playerWeapon)+ player.getPowerLevel();
-                player.setPowerLevel(playerPowerLevel);
                 Utils.displayText("Votre Power Level : " + player.getPowerLevel());
 
                 // Met à jour le powerLevel du joueur en fonction de la classe actuelle
-                player.setPowerLevel(player.getPowerLevel() + player.getPowerLevelBonus());
+                player.powerUp(player.getCharacter().getPowerLevelBonus());
 
                 // Met à jour le powerLevel du joueur en fonction de ses membres d'équipage
-                player.setPowerLevel(player.getPowerLevel() + calculateCrewPowerLevel(player));
+                player.powerUp(calculateCrewPowerLevel(player));
                 
                 if (((CombatNode) currentNode).combatNext()) {
 					currentNode.chooseNext();
@@ -177,22 +181,6 @@ public class Main {
             default:
                 Utils.displayText("Choix non valide. Utilisation de l'épée par défaut.");
                 return Weapon.SWORD;
-        }
-    }
-
-    private static int calculatePlayerPowerLevel(Weapon weapon) {
-        switch (weapon) {
-            case SWORD:
-                return 10;
-
-            case GUN:
-                return 15;
-
-            case SABER:
-                return 20;
-
-            default:
-                return 0;
         }
     }
 
