@@ -3,7 +3,6 @@ package representation;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.URL;
 import javax.sound.sampled.*;
 
 import fonctionGeneral.AudioPath;
