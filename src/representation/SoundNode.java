@@ -33,7 +33,6 @@ public class SoundNode extends DecorateurNode {
      */
     @Override
     public void display() {
-        super.display();
         try {
             // Obtenez l'URL de la ressource audio.
             File audioFile = new File(audioChemin);
@@ -48,7 +47,7 @@ public class SoundNode extends DecorateurNode {
                 // Démarrage de la lecture du son.
                 clip.start();
         
-                // Attente de la fin de la lecture du son (approche bloquante).
+                // Attente de la fin de la lecture du son .
                 Thread.sleep(clip.getMicrosecondLength() / 1000);
         
                 // Arrêt du son.
@@ -56,6 +55,7 @@ public class SoundNode extends DecorateurNode {
             } else {
                 System.err.println("Impossible de charger le fichier audio à partir du chemin : " + audioChemin);
             }
+        super.display();
         } catch (Exception e) {
             e.printStackTrace();
         }
