@@ -77,7 +77,9 @@ public class Player implements PowerLevel{
 
 
 	// Quand le joueur monte de niveau
-	// il gagne en puissance
+	// il gagne plus de puissance et de point de vie
+	// On utilise ces fonctions pour notre fonction level up 
+	// combat.
 	public void powerUp(int levelUp) {
 		powerLevel += levelUp;
 	}

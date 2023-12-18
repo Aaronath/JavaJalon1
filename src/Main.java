@@ -52,8 +52,8 @@ public class Main {
                 // Choix de devenir Marine
                 Utils.displayText("On vous attribue un personnage de type marine ! \n"
                 +"Comment voulez vous le nommer ?");
-                weapon = choosePlayerWeapon();
                 String pseudoMarine = scanner.nextLine();
+                weapon = choosePlayerWeapon();
             	NouvelleRecrue marine = new NouvelleRecrue(pseudoMarine,30, weapon);
                 player = new Player(pseudoJoueur, marine); // Le joueur commence en tant que Nouvelle recrue   
                 currentNode = startNode2;
