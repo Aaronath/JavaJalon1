@@ -1,6 +1,6 @@
 package representation;
 
-public abstract class DecorateurNode implements Event {
+public abstract class DecorateurNode implements Event  {
     Node node;
     
     public DecorateurNode(Node node) {
