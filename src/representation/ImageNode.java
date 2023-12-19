@@ -1,21 +1,41 @@
 package representation;
 
-public class ImageNode extends DecorateurNode  {
+import javax.swing.*;
 
-    public ImageNode(Node node) {
-        super(node);
-    }
+import fonctionGeneral.ImagePath;
 
-    @Override
-    public Node chooseNext() {
-        // TODO Auto-generated method stub
-        return super.chooseNext();
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
+// Décorateur concret pour l'image
+public class ImageNode extends NodeDecorator {
+    private ImagePath imagePath;
+
+    public ImageNode(Event decoratedNode, ImagePath imagePath) {
+        super(decoratedNode);
+        this.imagePath = imagePath;
     }
 
     @Override
     public void display() {
-        // TODO Auto-generated method stub
+        // Affiche l'image avant le contenu du nœud décoré
+        showImage();
         super.display();
     }
-    
+
+    private void showImage() {
+        // Logique pour afficher l'image
+        try {
+            BufferedImage img = ImageIO.read(new File(imagePath.getPath()));
+            ImageIcon icon = new ImageIcon(img);
+            JLabel label = new JLabel(icon);
+            JOptionPane.showMessageDialog(null, label);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+

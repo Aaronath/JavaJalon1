@@ -1,64 +1,37 @@
 package representation;
-
-import java.io.File;
-import java.io.IOException;
-
 import javax.sound.sampled.*;
 
 import fonctionGeneral.AudioPath;
 
-public class SoundNode extends DecorateurNode {
-    String audioChemin;
+import java.io.File;
+import java.io.IOException;
 
-    // Utilisez une classe d'énumération pour définir les chemins audio au lieu d'une chaîne.
-    public SoundNode(Node node, AudioPath audioChemin) {
-        super(node);
-        this.audioChemin = audioChemin.getPath();
+public class SoundNode extends NodeDecorator {
+    private AudioPath soundPath; // Chemin vers le fichier audio
+
+    public SoundNode(Event decoratedEvent, AudioPath soundPath) {
+        super(decoratedEvent);
+        this.soundPath = soundPath;
     }
 
-    /**
-     * Redéfinition de la méthode chooseNext.
-     * 
-     * @return Le prochain nœud choisi.
-     */
-    @Override
-    public Node chooseNext() {
-        // TODO: Implémentez la logique de choix du prochain nœud si nécessaire.
-        return super.chooseNext();
-    }
-
-    /**
-     * Redéfinition de la méthode display pour jouer le son en plus de l'affichage du nœud.
-     */
     @Override
     public void display() {
-        try {
-            // Obtenez le fichier de la ressource audio.
-            File audioFile = new File(audioChemin);
-        
-            if (audioFile != null) {
-                // Créez un AudioInputStream à partir du fichier.
-                AudioInputStream streamSound = AudioSystem.getAudioInputStream(audioFile);
-        
-                Clip clip = AudioSystem.getClip();
-                clip.open(streamSound);
-        
-                // Démarrage de la lecture du son.
-                clip.start();
-        
-                // Attente de la fin de la lecture du son .
-                Thread.sleep(clip.getMicrosecondLength() / 1000);
-        
-                // Arrêt du son.
-                clip.stop();
-            } else {
-                System.err.println("Impossible de charger le fichier audio à partir du chemin : " + audioChemin);
-            }
+
+        // Logique spécifique pour jouer le son
+        System.out.println("Joue le son: " + soundPath);
+        playSound();
         super.display();
-        } catch (Exception e) {
+    }
+
+    private void playSound() {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundPath.getPath()));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+            Thread.sleep(clip.getMicrosecondLength() / 1000);
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
-        
 }
-
