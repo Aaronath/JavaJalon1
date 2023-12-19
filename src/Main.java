@@ -1,4 +1,5 @@
 import representation.*;
+import fonctionGeneral.*;
 import univers.*;
 import univers.Character;
 import univers.Marine.NouvelleRecrue;
@@ -20,6 +21,22 @@ public class Main {
 
     	Monster monster = new Monster("Monstre", 70, Weapon.DEVIL_FRUIT);
         Player player;
+        
+     // Création du player
+        Pirate playerTest = new PirateRookie("Joueur", 80, Weapon.SWORD);
+
+        // Création d'un DecisionNode de base
+        DecisionNode decisionNode = new DecisionNode(1, "Faire un choix", null);
+
+        // Création d'un SoundNode décorant le DecisionNode
+        SoundNode soundDecisionNode = new SoundNode(decisionNode, AudioPath.POWERUP);
+        
+        // Création d'un nœud avec image
+        ImageNode imageNode = new ImageNode(new DecisionNode(1, "Vous découvrez une île mystérieuse. Que faites-vous ?", null), ImagePath.TEST);
+
+        imageNode.display();
+        // Affichage du SoundNode
+        soundDecisionNode.display();
     	
     	Node currentNode = null;
         DecisionNode startNode = new DecisionNode(1,"Veux-tu faire ton aventure : \n 1) En solo \n 2) Avec ton meilleur ami" );
@@ -64,6 +81,14 @@ public class Main {
                 Utils.displayText("Choix non valide. Fin de l'histoire.");
                 return;
         }
+        
+       
+        
+            
+        
+        
+        
+        
 
         //Création des Nodes relatives au choix Pirate
         InnerNode soloNode = new InnerNode(2, "Tu es donc solo ! Tu pars en mer à bord de ton radeau !");
