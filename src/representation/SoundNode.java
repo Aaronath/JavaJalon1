@@ -33,11 +33,11 @@ public class SoundNode extends DecorateurNode {
     @Override
     public void display() {
         try {
-            // Obtenez l'URL de la ressource audio.
+            // Obtenez le fichier de la ressource audio.
             File audioFile = new File(audioChemin);
         
             if (audioFile != null) {
-                // Créez un AudioInputStream à partir de l'URL.
+                // Créez un AudioInputStream à partir du fichier.
                 AudioInputStream streamSound = AudioSystem.getAudioInputStream(audioFile);
         
                 Clip clip = AudioSystem.getClip();
