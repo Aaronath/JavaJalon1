@@ -18,13 +18,12 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
+    	
     	Monster monster = new Monster("Monstre", 40);
         Player player;
     	
     	Event currentNode = null;
         Event startNodePirate = new DecisionNode(1,"Veux-tu faire ton aventure : \n 1) En solo \n 2) Avec ton meilleur ami" );
-        SoundNode snpSoundNode = new SoundNode(startNodePirate, AudioPath.JUMP);
         Event startNodeMarine = new DecisionNode(1,"Veux-tu faire ta carrière :\n \n 1) En écrasant les autres \n 2) En te faisant un maximum d'alliés" );
         
         Scanner scanner = new Scanner(System.in);
@@ -62,7 +61,7 @@ public class Main {
                 Utils.displayText("Tu décides donc la voie de la piraterie ! \n Tu commences au stade de Rookie !\n");
                 PirateRookie pirate = new PirateRookie(pseudoJoueur, 50);
                 player = new Player(pseudoJoueur, pirate); // Le joueur commence en tant que Pirate Rookie 
-                currentNode = snpSoundNode;
+                currentNode = startNodePirate;
                 break;
 
             case 2:
@@ -79,13 +78,13 @@ public class Main {
 
         //Création des Nodes relatives au choix Pirate
         Event soloNode = new InnerNode(2, "Tu es donc solo ! Tu pars en mer à bord de ton radeau !");
-        ImageNode snNode = new ImageNode(soloNode, ImagePath.TEST);
+        Event snNode = new ImageNode(soloNode, ImagePath.TEST);
         Event duoNode = new InnerNode(3, "Tu as raison, l'aventure c'est toujours mieux avec un ami !");
-        SoundNode dnNode = new SoundNode(duoNode, AudioPath.FINALEND);
+        Event dnNode = new SoundNode(duoNode, AudioPath.FINALEND);
         Event monsterNode = new DecisionNode(4, "Un monstre marin surgit hors de l'eau ! Que vas-tu faire : \n 1) Fuir \n 2) Combattre");
         Event escapeMonsterNode = new InnerNode(5, "Le monstre a tout de même réussi à déchirer ta voile. Tu es à la dérive...");
-        CombatNode fightMonsterNode = new CombatNode(6, "A l'attaque !", null, monster, player);
-        SoundNode fmSoundNode = new SoundNode(fightMonsterNode, AudioPath.JUMP);
+        Event fightMonsterNode = new CombatNode(6, "A l'attaque !", null, monster, player);
+        Event fmSoundNode = new SoundNode(fightMonsterNode, AudioPath.JUMP);
         Event islandNode = new ChanceNode(7, "Le courant te fais dérivé mais miracle ! Terre en vue !");
         Event logueTownNode = new InnerNode(8, "Tu accostes à LogueTown,le repère des pirates !");
         Event whiskyPeakNode = new InnerNode(8, "Tu accostes à Whisky Peak,le repère des chasseurs de prime !");
@@ -93,10 +92,10 @@ public class Main {
         
                  
         //Graphe de l'histoire
-        startNodePirate.setNextNodes(Arrays.asList(soloNode, duoNode));
-        soloNode.setNextNodes(Arrays.asList(monsterNode));
+        startNodePirate.setNextNodes(Arrays.asList(snNode, dnNode));
+        snNode.setNextNodes(Arrays.asList(monsterNode));
         dnNode.setNextNodes(Arrays.asList(monsterNode));
-        monsterNode.setNextNodes(Arrays.asList(escapeMonsterNode, fightMonsterNode));
+        monsterNode.setNextNodes(Arrays.asList(escapeMonsterNode, fmSoundNode));
         fmSoundNode.setNextNodes(Arrays.asList(escapeMonsterNode));
         escapeMonsterNode.setNextNodes(Arrays.asList(islandNode));
         islandNode.setNextNodes(Arrays.asList(logueTownNode, whiskyPeakNode));
@@ -150,9 +149,9 @@ public class Main {
             
 
         // Simulation de l'histoire
-         
         while (!(currentNode instanceof TerminalNode)) {
             currentNode.display();
+            System.out.println(currentNode.getClass());
             if (currentNode instanceof CombatNode) {
                 Pirate opponent = ((CombatNode) currentNode).getOpponent();
                 // Met à jour le powerLevel du joueur en fonction de ses membres d'équipage
