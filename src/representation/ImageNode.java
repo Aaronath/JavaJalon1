@@ -12,25 +12,38 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-// Décorateur concret pour l'image
+/**
+ * La classe ImageNode est un décorateur concret qui ajoute la fonctionnalité
+ * d'afficher une image avant le contenu du nœud décoré.
+ */
 public class ImageNode extends NodeDecorator {
-    private ImagePath imagePath;
-    
 
+    /** Chemin vers l'image à afficher. */
+    private ImagePath imagePath;
+
+    /**
+     * Constructeur de ImageNode.
+     * @param decoratedNode Le nœud décoré auquel l'image sera ajoutée.
+     * @param imagePath Le chemin vers l'image à afficher.
+     */
     public ImageNode(Event decoratedNode, ImagePath imagePath) {
         super(decoratedNode);
         this.imagePath = imagePath;
     }
 
+    /**
+     * Affiche l'image avant le contenu du nœud décoré.
+     */
     @Override
     public void display() {
-        // Affiche l'image avant le contenu du nœud décoré
         showImage();
         super.display();
     }
 
+    /**
+     * Affiche l'image à partir du chemin spécifié.
+     */
     private void showImage() {
-        // Logique pour afficher l'image
         try {
             BufferedImage img = ImageIO.read(new File(imagePath.getPath()));
             ImageIcon icon = new ImageIcon(img);
@@ -41,10 +54,12 @@ public class ImageNode extends NodeDecorator {
         }
     }
 
-	@Override
-	public void setNextNodes(List<Event> asList) {
-		decoratedEvent.setNextNodes(asList);
-		
-	}
+    /**
+     * Définit la liste des événements suivants possibles après ce nœud décoré.
+     * @param asList La liste des événements suivants possibles.
+     */
+    @Override
+    public void setNextNodes(List<Event> asList) {
+        decoratedEvent.setNextNodes(asList);
+    }
 }
-
