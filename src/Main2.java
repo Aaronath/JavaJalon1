@@ -2,7 +2,6 @@ import fonctionGeneral.AudioPath;
 import representation.NodeDecorator;
 import representation.InnerNode;
 import representation.SoundNode;
-import univers.Weapon;
 import univers.Marine.NouvelleRecrue;
 
 public class Main2 {

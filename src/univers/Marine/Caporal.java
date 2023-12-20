@@ -1,10 +1,8 @@
 package univers.Marine;
 
-import univers.Weapon;
-
 public class Caporal extends MarineSoldier {
-    public Caporal(String name, int powerLevel, Weapon signatureMove) {
-        super( name,powerLevel, signatureMove);
+    public Caporal(String name, int powerLevel) {
+        super( name,powerLevel);
     }
 
 }

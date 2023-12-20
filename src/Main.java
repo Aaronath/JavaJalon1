@@ -11,109 +11,99 @@ import univers.Pirate.PirateSupernova;
 import fonctionGeneral.AudioPath;
 import fonctionGeneral.Utils;
 
+import java.io.NotActiveException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class Main {
     public static void main(String[] args) {
 
-    	Monster monster = new Monster("Monstre", 70, Weapon.DEVIL_FRUIT);
+    	Monster monster = new Monster("Monstre", 40);
         Player player;
-        
-     // Création du player
-        Pirate playerTest = new PirateRookie("Joueur", 80, Weapon.SWORD);
-
-        // Création d'un DecisionNode de base
-        DecisionNode decisionNode = new DecisionNode(1, "Faire un choix", null);
-
-        // Création d'un SoundNode décorant le DecisionNode
-        SoundNode soundDecisionNode = new SoundNode(decisionNode, AudioPath.POWERUP);
-        
-        // Création d'un nœud avec image
-        ImageNode imageNode = new ImageNode(new DecisionNode(1, "Vous découvrez une île mystérieuse. Que faites-vous ?", null), ImagePath.TEST);
-
-        imageNode.display();
-        // Affichage du SoundNode
-        soundDecisionNode.display();
     	
-    	Node currentNode = null;
-        DecisionNode startNode = new DecisionNode(1,"Veux-tu faire ton aventure : \n 1) En solo \n 2) Avec ton meilleur ami" );
-        DecisionNode startNode2 = new DecisionNode(1,"Veux-tu faire ta carrière :\n \n 1) En écrasant les autres \n 2) En te faisant un maximum d'alliés" );
+    	Event currentNode = null;
+        Event startNodePirate = new DecisionNode(1,"Veux-tu faire ton aventure : \n 1) En solo \n 2) Avec ton meilleur ami" );
+        SoundNode snpSoundNode = new SoundNode(startNodePirate, AudioPath.JUMP);
+        Event startNodeMarine = new DecisionNode(1,"Veux-tu faire ta carrière :\n \n 1) En écrasant les autres \n 2) En te faisant un maximum d'alliés" );
         
         Scanner scanner = new Scanner(System.in);
         // Début de l'histoire
         Utils.displayText("Bienvenue dans le monde des pirates !");
-        Utils.displayText("Très bien ! Commençons par de brèves présentation, quel est votre nom ? :");
+        Utils.displayText("Commençons par de brèves présentations, comment t'appelles-tu ? :");
         String pseudoJoueur = scanner.nextLine();
-        Utils.displayText("Choisissez votre destin :");
+        Utils.displayText(pseudoJoueur + " c'est ça ? (1 pour oui, 0 pour non)");
+        int confirmation = scanner.nextInt();
+        scanner.nextLine();
+        while(confirmation == 0) {
+        	Utils.displayText("Répète moi ton prénom dans ce cas : ");
+        	pseudoJoueur = scanner.nextLine();
+        	Utils.displayText(pseudoJoueur + " c'est ça ? (1 pour oui, 0 pour non)");
+        	confirmation = scanner.nextInt();
+        	scanner.nextLine();
+        }
+        Utils.displayText("Quelle vie as-tu décidé de mener ?");
         Utils.displayText("1. Devenir un pirate");
         Utils.displayText("2. S'engager dans la Marine");
 
         int userChoice = scanner.nextInt();
-
+        while (userChoice !=1 && userChoice !=2) {
+			Utils.displayText("Quelle vie as-tu décidé de mener ?");
+	        Utils.displayText("1. Devenir un pirate");
+	        Utils.displayText("2. S'engager dans la Marine");
+	
+	        userChoice = scanner.nextInt();
+		}
+        
         switch (userChoice) {
             case 1:
                 // Choix de devenir un pirate
                 
-                Utils.displayText("On vous attribue un personnage de type pirate ! \n\n");
-                Weapon weapon = choosePlayerWeapon();
-                Utils.displayText("Comment voulez vous nommer votre personnage?");
-                String pseudoPirate = scanner.nextLine();
-                PirateRookie pirate = new PirateRookie(pseudoPirate,30, weapon);
-                player = new Player(pseudoJoueur, pirate); // Le joueur commence en tant que Pirate Rookie   
-                currentNode = startNode;
+                Utils.displayText("Tu décides donc la voie de la piraterie ! \n Tu commences au stade de Rookie !\n");
+                PirateRookie pirate = new PirateRookie(pseudoJoueur, 50);
+                player = new Player(pseudoJoueur, pirate); // Le joueur commence en tant que Pirate Rookie 
+                currentNode = snpSoundNode;
                 break;
 
             case 2:
                 // Choix de devenir Marine
-                Utils.displayText("On vous attribue un personnage de type marine ! \n"
-                +"Comment voulez vous le nommer ?");
-                String pseudoMarine = scanner.nextLine();
-                weapon = choosePlayerWeapon();
-            	NouvelleRecrue marine = new NouvelleRecrue(pseudoMarine,30, weapon);
+                Utils.displayText("Tu t'enroles dans la marine ! Tu commences au stade de nouvelle recrue !");
+            	NouvelleRecrue marine = new NouvelleRecrue(pseudoJoueur,30);
                 player = new Player(pseudoJoueur, marine); // Le joueur commence en tant que Nouvelle recrue   
-                currentNode = startNode2;
+                currentNode = startNodeMarine;
                 break;
 
             default:
-                Utils.displayText("Choix non valide. Fin de l'histoire.");
                 return;
         }
-        
-       
-        
-            
-        
-        
-        
-        
 
         //Création des Nodes relatives au choix Pirate
-        InnerNode soloNode = new InnerNode(2, "Tu es donc solo ! Tu pars en mer à bord de ton radeau !");
-        InnerNode duoNode = new InnerNode(3, "Tu as raison, l'aventure c'est toujours mieux avec un ami !");
-        DecisionNode monsterNode = new DecisionNode(4, "Un monstre marin surgit hors de l'eau ! Que vas-tu faire : \n 1) Fuir \n 2) Combattre");
-        InnerNode escapeMonsterNode = new InnerNode(5, "Le monstre a tout de même réussi à déchirer ta voile. Tu es à la dérive...");
+        Event soloNode = new InnerNode(2, "Tu es donc solo ! Tu pars en mer à bord de ton radeau !");
+        ImageNode snNode = new ImageNode(soloNode, ImagePath.TEST);
+        Event duoNode = new InnerNode(3, "Tu as raison, l'aventure c'est toujours mieux avec un ami !");
+        SoundNode dnNode = new SoundNode(duoNode, AudioPath.FINALEND);
+        Event monsterNode = new DecisionNode(4, "Un monstre marin surgit hors de l'eau ! Que vas-tu faire : \n 1) Fuir \n 2) Combattre");
+        Event escapeMonsterNode = new InnerNode(5, "Le monstre a tout de même réussi à déchirer ta voile. Tu es à la dérive...");
         CombatNode fightMonsterNode = new CombatNode(6, "A l'attaque !", null, monster, player);
-        ChanceNode islandNode = new ChanceNode(7, "Le courant te fais dérivé mais miracle ! Terre en vue !");
-        InnerNode logueTownNode = new InnerNode(8, "Tu accostes à LogueTown,le repère des pirates !");
-        InnerNode whiskyPeakNode = new InnerNode(8, "Tu accostes à Whisky Peak,le repère des chasseurs de prime !");
-        TerminalNode terminalNode = new TerminalNode(14, "Vous avez atteint l'objectif ultime : vous êtes le Pirate King ! Félicitations !");
+        SoundNode fmSoundNode = new SoundNode(fightMonsterNode, AudioPath.JUMP);
+        Event islandNode = new ChanceNode(7, "Le courant te fais dérivé mais miracle ! Terre en vue !");
+        Event logueTownNode = new InnerNode(8, "Tu accostes à LogueTown,le repère des pirates !");
+        Event whiskyPeakNode = new InnerNode(8, "Tu accostes à Whisky Peak,le repère des chasseurs de prime !");
+        Event terminalNode = new TerminalNode(14, "Vous avez atteint l'objectif ultime : vous êtes le Pirate King ! Félicitations !");
         
                  
         //Graphe de l'histoire
-        startNode.setNextNodes(Arrays.asList(soloNode, duoNode));
+        startNodePirate.setNextNodes(Arrays.asList(soloNode, duoNode));
         soloNode.setNextNodes(Arrays.asList(monsterNode));
-        duoNode.setNextNodes(Arrays.asList(monsterNode));
+        dnNode.setNextNodes(Arrays.asList(monsterNode));
         monsterNode.setNextNodes(Arrays.asList(escapeMonsterNode, fightMonsterNode));
-        fightMonsterNode.setNextNodes(Arrays.asList(escapeMonsterNode));
+        fmSoundNode.setNextNodes(Arrays.asList(escapeMonsterNode));
         escapeMonsterNode.setNextNodes(Arrays.asList(islandNode));
         islandNode.setNextNodes(Arrays.asList(logueTownNode, whiskyPeakNode));
         logueTownNode.setNextNodes(Arrays.asList(terminalNode));
         whiskyPeakNode.setNextNodes(Arrays.asList(terminalNode));
 
-        //Choix marine
+        /*Choix marine
         
         InnerNode soloNode2 = new InnerNode(2, "Tu préfères donc la voie de  et de la puissance !\n"
         		+ "\nTu es tomber sur un power up !\n"
@@ -144,40 +134,34 @@ public class Main {
         TerminalNode fin = new TerminalNode(9,"\nTu revNiens de ta mission héroique, acclamé par les foules.\n"
         		+ "\nAu paroxysme des célébrations, tu es nommée par ton chef comme Amiral pour ton courage et ta bravo."
         		+ "\n Tu as désormais atteint ton objectifs, tu es désormais au sommet de la marine !"
-        		+ "\n Félicitation !");
+        		+ "\n Félicitation !");*/
         
                  
 
                 
-        //Graphe de l'histoire marine
-        startNode2.setNextNodes(Arrays.asList(soloNode2, teamNode));
+        /*Graphe de l'histoire marine
+        startNodeMarine.setNextNodes(Arrays.asList(soloNode2, teamNode));
         soloNode2.setNextNodes(Arrays.asList(missionNode));
         teamNode.setNextNodes(Arrays.asList(missionNode));
         missionNode.setNextNodes(Arrays.asList(vsPirateNode));
         vsPirateNode.setNextNodes(Arrays.asList(heroNode));
         heroNode.setNextNodes(Arrays.asList(momNode,deathNode));
-        momNode.setNextNodes(Arrays.asList(fin));
+        momNode.setNextNodes(Arrays.asList(fin));*/
             
 
         // Simulation de l'histoire
          
         while (!(currentNode instanceof TerminalNode)) {
             currentNode.display();
-
             if (currentNode instanceof CombatNode) {
                 Pirate opponent = ((CombatNode) currentNode).getOpponent();
-                Utils.displayText("Votre Power Level : " + player.getPowerLevel());
-
-                // Met à jour le powerLevel du joueur en fonction de la classe actuelle
-                player.powerUp(player.getCharacter().getPowerLevelBonus());
-
                 // Met à jour le powerLevel du joueur en fonction de ses membres d'équipage
-                player.powerUp(calculateCrewPowerLevel(player));
-                
                 if (((CombatNode) currentNode).combatNext()) {
-					currentNode.chooseNext();
-				}
+                    currentNode = currentNode.chooseNext();
+                    continue; // Passer à l'itération suivante de la boucle pour éviter un double traitement
+                }
             }
+
             currentNode = currentNode.chooseNext();
         }
 
@@ -185,48 +169,6 @@ public class Main {
         currentNode.display();
     }
 
-    private static Weapon choosePlayerWeapon() {
-        Utils.displayText("Choisissez votre arme :");
-        Utils.displayText("1. Épée");
-        Utils.displayText("2. Fusil");
-        Utils.displayText("3. Sabre");
-
-        Scanner scanner = new Scanner(System.in);
-        int weaponChoice = scanner.nextInt();
-
-        switch (weaponChoice) {
-            case 1:
-                return Weapon.SWORD;
-
-            case 2:
-                return Weapon.GUN;
-
-            case 3:
-                return Weapon.SABER;
-
-            default:
-                Utils.displayText("Choix non valide. Utilisation de l'épée par défaut.");
-                return Weapon.SWORD;
-        }
-    }
-
-    private static int calculateCrewPowerLevel(Player player) {
-        // Simule l'ajout de membres d'équipage
-        List<Pirate> crewMembers = Arrays.asList(
-                new PirateRookie("Membre 1 ", 40, Weapon.SWORD),
-                new PirateCaptain("Memebre 2", 30, Weapon.GUN, null),
-                new PirateSupernova("Membre 3", 25, Weapon.SABER)
-        );
-
-        int totalCrewPowerLevel = 0;
-
-        for (Pirate crewMember : crewMembers) {
-            totalCrewPowerLevel += crewMember.getPowerLevel();
-        }
-
-        Utils.displayText("Power Level de l'équipage : " + totalCrewPowerLevel);
-
-        return totalCrewPowerLevel;
-    }
+    
 }
 

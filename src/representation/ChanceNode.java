@@ -4,26 +4,24 @@ import java.util.List;
 import java.util.Random;
 
 public class ChanceNode extends Node {
-    protected List<Node> nextNodes;
+    protected List<Event> nextNodes;
     
     public ChanceNode(int id, String description) {
         super(id, description);
     }
-    public ChanceNode(int id, String description, List<Node> nextNodes) {
+    public ChanceNode(int id, String description, List<Event> nextNodes) {
         super(id, description);
         this.nextNodes = nextNodes;
     }
     
     
 
-    public List<Node> getNextNodes() {
+    public List<Event> getNextNodes() {
 		return nextNodes;
 	}
-	public void setNextNodes(List<Node> nextNodes) {
-		this.nextNodes = nextNodes;
-	}
+	
 	@Override
-    public Node chooseNext() {
+    public Event chooseNext() {
         // Simulez un événement aléatoire
         Random random = new Random();
         int randomChoice = random.nextInt(nextNodes.size());
@@ -31,4 +29,10 @@ public class ChanceNode extends Node {
         // Retournez le nœud correspondant au choix aléatoire.
         return nextNodes.get(randomChoice);
     }
+	
+	@Override
+	public void setNextNodes(List<Event> nextNodes) {
+	    this.nextNodes = nextNodes;
+	}
+
 }
