@@ -6,16 +6,17 @@ package univers.Pirate;
  *
  * @author Nathan Halioua
  */
-public class PirateYonko extends Pirate {
+public class PirateYonko extends PirateCaptain {
 
     /**
      * Constructeur de la classe PirateYonko.
      *
      * @param name        Le nom du Yonko pirate.
      * @param powerLevel  Le niveau de puissance initial du Yonko pirate.
+     * @param crewName 
      */
-    public PirateYonko(String name, int powerLevel) {
-        super(name, powerLevel);
+    public PirateYonko(String name, int powerLevel, String crewName) {
+        super(name, powerLevel, crewName);
         // Le niveau de puissance du Yonko est fixé à 150 par défaut.
         this.powerLevel = 150;
     }

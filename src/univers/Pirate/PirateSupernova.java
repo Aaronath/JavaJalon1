@@ -8,17 +8,18 @@ package univers.Pirate;
  * 
  * @author Nathan Halioua
  */
-public class PirateSupernova extends Pirate {
+public class PirateSupernova extends PirateCaptain {
 
     /**
      * Constructeur de la classe PirateSupernova.
      * 
      * @param name Le nom du pirate Supernova.
      * @param powerLevel Le niveau de puissance du pirate Supernova.
+     * @param crewName 
      */
-    public PirateSupernova(String name, int powerLevel) {
+    public PirateSupernova(String name, int powerLevel, String crewName) {
         // Appelle le constructeur de la classe parente (Pirate) avec les paramètres spécifiés.
-        super(name, powerLevel);
+        super(name, powerLevel, crewName);
         // Ajuste le niveau de puissance du pirate Supernova.
         this.powerLevel = 100;
     }

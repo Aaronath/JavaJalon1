@@ -1,5 +1,7 @@
 package univers.Pirate;
 
+import java.util.List;
+
 /**
  * La classe PirateCaptain représente un capitaine pirate, un pillard des mers.
  * 
@@ -10,7 +12,8 @@ package univers.Pirate;
  */
 public class PirateCaptain extends Pirate {
 
-    private String crewName; // Nom de l'équipage dirigé par le capitaine.
+    private String crewName;
+    private List<Pirate> crewList;// Nom de l'équipage dirigé par le capitaine.
 
     /**
      * Constructeur de la classe PirateCaptain.
@@ -27,7 +30,41 @@ public class PirateCaptain extends Pirate {
         this.powerLevel = 80;
     }
 
-    /**
+    public PirateCaptain(String name, int powerLevel, String crewName, List<Pirate> crewList) {
+		super(name, powerLevel);
+		this.powerLevel = 80;
+		this.crewName = crewName;
+		this.crewList = crewList;
+	}
+
+
+
+	public String getCrewName() {
+		return crewName;
+	}
+
+	public void setCrewName(String crewName) {
+		this.crewName = crewName;
+	}
+
+	public List<Pirate> getCrewList() {
+		return crewList;
+	}
+
+	public void setCrewList(List<Pirate> crewList) {
+		this.crewList = crewList;
+	}
+	
+	public float getCrewPowerLevel() {
+    	float crewPowerLevel = 0;
+    	
+		for (Pirate crewMember : crewList) {
+         crewPowerLevel += crewMember.getPowerLevel()/2;
+		}
+    	return crewPowerLevel; 
+    }
+
+	/**
      * Méthode permettant au pirate de se présenter.
      * Il mentionne son nom, son statut de capitaine pirate et le nom de son équipage.
      */

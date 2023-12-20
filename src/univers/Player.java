@@ -72,12 +72,7 @@ public class Player implements PowerLevel {
         return this.character;
     }
 
-    /**
-     * Augmente le niveau de puissance du joueur lorsqu'il monte de niveau.
-     *
-     * @param levelUp La quantité d'augmentation du niveau de puissance.
-     */
-    public void powerUp(int levelUp) {
-        powerLevel += levelUp;
-    }
+	public void setCharacter(Character character) {
+		this.character = character;
+	}
 }

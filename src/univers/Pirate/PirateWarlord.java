@@ -7,16 +7,17 @@ package univers.Pirate;
  * 
  * @author Nathan Halioua
  */
-public class PirateWarlord extends Pirate {
+public class PirateWarlord extends PirateCaptain {
 
     /**
      * Constructeur de la classe PirateWarlord.
      *
      * @param name        Le nom du seigneur de guerre pirate.
      * @param powerLevel  Le niveau de puissance initial du seigneur de guerre pirate.
+     * @param crewName 
      */
-    public PirateWarlord(String name, int powerLevel) {
-        super(name, powerLevel);
+    public PirateWarlord(String name, int powerLevel, String crewName) {
+        super(name, powerLevel, crewName);
         // Initialise le niveau de puissance du seigneur de guerre pirate à une valeur spécifique (120 dans cet exemple).
         this.powerLevel = 120;
     }
