@@ -16,5 +16,9 @@ public abstract class NodeDecorator implements Event {
     public Event chooseNext() {
         return decoratedEvent.chooseNext();
     }
+
+	public Event getDecoratedEvent() {
+		return decoratedEvent;
+	}
 }
 

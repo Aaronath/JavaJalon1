@@ -34,7 +34,14 @@ public class CombatNode extends InnerNode {
 		this.opponent = opponent;
 	}
 
-
+	public void display() {
+            opponent = this.getOpponent();
+            // Met à jour le powerLevel du joueur en fonction de ses membres d'équipage
+            if (!this.combatNext()) {
+                System.exit(0);
+            }
+        }
+	
 	
 	public boolean combatNext() {
 	    // Affiche les informations sur l'opposant
@@ -89,9 +96,6 @@ public class CombatNode extends InnerNode {
 	    }
 	}
 	
-	//public void setNextNodes(List<Node> nextNodes) {
-		//this.nextNodes = nextNodes;
-	//}
 	
 	@Override
     public Event chooseNext() {

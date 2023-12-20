@@ -60,7 +60,7 @@ public class ImageNode extends NodeDecorator {
             frame.setVisible(true);
 
             // Crée un timer pour fermer la fenêtre après 4 secondes
-            Timer timer = new Timer(4000, new ActionListener() {
+            Timer timer = new Timer(3000, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     frame.dispose(); // Ferme la fenêtre
