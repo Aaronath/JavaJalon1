@@ -15,11 +15,11 @@ class Game {
     private Event currentNode;
 
     public void configureGame() {
-    	Monster monster = new Monster("Monstre", 100);
-        Player player;
+    	Monster monster = new Monster("Monstre", 40);
+        PirateRookie bestFriend = new PirateRookie("Ace", 40);
     	
     	currentNode = null;
-        Event startNodePirate = new DecisionNode(1,"Veux-tu faire ton aventure : \n 1) En solo \n 2) Avec ton meilleur ami" );
+        Event startNodePirate = new InnerNode(1,"Tu commences à t'approcher du port pour trouver une embarcation quand soudain un dilemme se pose :");
         Event startNodeMarine = new DecisionNode(1,"Veux-tu faire ta carrière :\n \n 1) En écrasant les autres \n 2) En te faisant un maximum d'alliés" );
         
         Scanner scanner = new Scanner(System.in);
@@ -75,6 +75,7 @@ class Game {
     	
     	
     	//Création des Nodes relatives au choix Pirate
+        Event bestFriendNode = new CrewNode(1,"Veux-tu faire ton aventure : \n 1) En solo \n 2) Avec ton meilleur ami", bestFriend, player );
         Event soloNode = new InnerNode(2, "Tu es donc solo ! Tu pars en mer à bord de ton radeau !");
         Event snNode = new ImageNode(soloNode, ImagePath.TEST);
         Event duoNode = new InnerNode(3, "Tu as raison, l'aventure c'est toujours mieux avec un ami !");
@@ -90,7 +91,8 @@ class Game {
         
                  
         //Graphe de l'histoire
-        startNodePirate.setNextNodes(Arrays.asList(snNode, dnNode));
+        startNodePirate.setNextNodes(Arrays.asList(bestFriendNode));
+        bestFriendNode.setNextNodes(Arrays.asList(snNode, dnNode));
         snNode.setNextNodes(Arrays.asList(monsterNode));
         dnNode.setNextNodes(Arrays.asList(monsterNode));
         monsterNode.setNextNodes(Arrays.asList(escapeMonsterNode, fmSoundNode));

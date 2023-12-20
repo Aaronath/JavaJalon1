@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class DecisionNode extends Node {
 
     /** Liste des nœuds d'événements possibles après ce nœud de décision. */
-    private List<Event> nextNodes;
+    protected List<Event> nextNodes;
 
     /**
      * Constructeur permettant de créer un nœud de décision avec un identifiant, une description

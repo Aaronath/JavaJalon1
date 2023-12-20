@@ -7,6 +7,7 @@ import java.util.Scanner;
 import univers.*;
 import univers.Character;
 import univers.Pirate.Pirate;
+import univers.Pirate.PirateCaptain;
 import fonctionGeneral.Utils;
 
 /**
@@ -81,6 +82,9 @@ public class CombatNode extends InnerNode {
         Utils.displayText("Vous êtes confronté à " + opponent.getName() + ", un redoutable ennemi !");
         Utils.displayText("Votre Power Level : " + player.getPowerLevel());
         Utils.displayText("Power Level de l'adversaire : " + opponent.getPowerLevel());
+        if (player.getCharacter() instanceof PirateCaptain) {
+			Utils.displayText("PowerLevel de l'équipage : " + ((PirateCaptain) player.getCharacter()).getCrewPowerLevel());
+		}
 
         // Affiche les options de combat
         Utils.displayText("Choisissez votre action :");
@@ -113,7 +117,12 @@ public class CombatNode extends InnerNode {
      */
     private boolean determineCombatOutcome() {
         // Logique pour déterminer l'issue du combat
-        if (opponent.getPowerLevel() > player.getPowerLevel()) {
+    	float crewPowerLevel = 0;
+    	if (player.getCharacter() instanceof PirateCaptain) {
+    		System.out.println("oui");
+			crewPowerLevel = ((PirateCaptain) player.getCharacter()).getCrewPowerLevel();
+		}
+        if (opponent.getPowerLevel() > player.getPowerLevel() + crewPowerLevel) {
             Utils.displayText("Votre attaque n'a pas suffi ! L'adversaire contre-attaque !\n Vous êtes vaincu. Fin de l'histoire. ");
             return false;
         } else {

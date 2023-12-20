@@ -31,7 +31,6 @@ public class SoundNode extends NodeDecorator {
      */
     @Override
     public void display() {
-        System.out.println("Joue le son: " + soundPath);
         playSound();
         super.display();
     }
