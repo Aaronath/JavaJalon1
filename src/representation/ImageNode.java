@@ -8,11 +8,14 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+
 import javax.imageio.ImageIO;
 
 // Décorateur concret pour l'image
 public class ImageNode extends NodeDecorator {
     private ImagePath imagePath;
+    
 
     public ImageNode(Event decoratedNode, ImagePath imagePath) {
         super(decoratedNode);
@@ -37,5 +40,11 @@ public class ImageNode extends NodeDecorator {
             e.printStackTrace();
         }
     }
+
+	@Override
+	public void setNextNodes(List<Event> asList) {
+		decoratedEvent.setNextNodes(asList);
+		
+	}
 }
 

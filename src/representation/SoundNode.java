@@ -5,6 +5,7 @@ import fonctionGeneral.AudioPath;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class SoundNode extends NodeDecorator {
     private AudioPath soundPath; // Chemin vers le fichier audio
@@ -17,13 +18,15 @@ public class SoundNode extends NodeDecorator {
     @Override
     public void display() {
 
+
         // Logique spécifique pour jouer le son
         System.out.println("Joue le son: " + soundPath);
+
         playSound();
         super.display();
     }
 
-    private void playSound() {
+    public void playSound() {
         try {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundPath.getPath()));
             Clip clip = AudioSystem.getClip();
@@ -34,4 +37,9 @@ public class SoundNode extends NodeDecorator {
             e.printStackTrace();
         }
     }
+
+	@Override
+	public void setNextNodes(List<Event> asList) {
+		decoratedEvent.setNextNodes(asList);
+	}
 }

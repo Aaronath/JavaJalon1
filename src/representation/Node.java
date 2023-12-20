@@ -54,5 +54,5 @@ public abstract class Node implements Event {
 	        return result;
 	    }
 	
-	public abstract Node chooseNext();
+	public abstract Event chooseNext();
 }

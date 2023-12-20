@@ -5,17 +5,15 @@ import fonctionGeneral.Utils;
 public abstract class Character implements PowerLevel {
     protected String name;
     protected int powerLevel;
-	protected int pv;
-    protected Weapon weapon;
 
-    public Character(String name,int powerLevel, Weapon weapon) {
-        this.powerLevel = powerLevel + weapon.getPowerLevel();
-        this.weapon = weapon;
+    public Character(String name,int powerLevel) {
+    	this.name = name;
+        this.powerLevel = powerLevel;
     }
 
     public void introduceYourself(String name) {
-        Utils.displayText("Je suis un personnage, " + name + ". Mon niveau de puissance est " + powerLevel +
-                " et j'utilise " + weapon + " comme arme.");
+        Utils.displayText("Je suis " + name + ". Mon niveau de puissance est " + powerLevel +
+                ".");
     }
 
     public void setName(String name) {
@@ -23,7 +21,7 @@ public abstract class Character implements PowerLevel {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
 
@@ -34,22 +32,4 @@ public abstract class Character implements PowerLevel {
 	public void setPowerLevel(int powerLevel) {
 		this.powerLevel = powerLevel;
 	}
-
-	public Weapon getWeapon() {
-		return weapon;
-	}
-
-	public void setWeapon(Weapon weapon) {
-		this.weapon = weapon;
-	}
-
-    public int getPv() {
-        return pv;
-    }
-
-    public void setPv(int pv) {
-        this.pv = pv;
-    }
-
-	public abstract int getPowerLevelBonus();
 }

@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DecisionNode extends Node {
-    private List<Node> nextNodes;
+    private List<Event> nextNodes;
 
-    public DecisionNode(int id, String description, List<Node> nextNodes) {
+    public DecisionNode(int id, String description, List<Event> nextNodes) {
         super(id, description);
         this.nextNodes = nextNodes;
     }
@@ -15,12 +15,12 @@ public class DecisionNode extends Node {
         super(id, description);
     }
 
-    public void setNextNodes(List<Node> nextNodes) {
+    public void setNextNodes(List<Event> nextNodes) {
         this.nextNodes = nextNodes;
     }
 
     @Override
-    public Node chooseNext() {
+    public Event chooseNext() {
         while (true) {
             // Affiche les options disponibles
             System.out.println("Choisissez une option :");
@@ -37,5 +37,4 @@ public class DecisionNode extends Node {
             }
         }
     }
-
 }

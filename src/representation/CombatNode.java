@@ -1,6 +1,7 @@
 package representation;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import univers.*;
@@ -12,7 +13,7 @@ public class CombatNode extends InnerNode {
     private Pirate opponent;
     private Player player;
 
-    public CombatNode(int id, String description, List<Node> nextNodes, Pirate opponent, Player player) {
+    public CombatNode(int id, String description, List<Event> nextNodes, Pirate opponent, Player player) {
         super(id, description, nextNodes);
         this.opponent = opponent;
         this.player = player;
@@ -38,13 +39,13 @@ public class CombatNode extends InnerNode {
 	public boolean combatNext() {
 	    // Affiche les informations sur l'opposant
 	    Utils.displayText("Vous êtes confronté à " + opponent.getName() + ", un redoutable ennemi !");
+        Utils.displayText("Votre Power Level : " + player.getPowerLevel());
 	    Utils.displayText("Power Level de l'adversaire : " + opponent.getPowerLevel());
-	    Utils.displayText("Arme de l'adversaire : " + opponent.getWeapon());
 
 	    // Affiche les options de combat
 	    Utils.displayText("Choisissez votre action :");
-	    Utils.displayText("1. Attaquer avec votre arme");
-	    Utils.displayText("2. Utiliser une compétence spéciale (non implémenté pour l'instant)");
+	    Utils.displayText("1. Combattre !");
+	    Utils.displayText("2. Tenter de fuir ...");
 
 	    Scanner scanner = new Scanner(System.in);
 	    int userChoice = scanner.nextInt();
@@ -52,15 +53,15 @@ public class CombatNode extends InnerNode {
 	    // Effectue l'action choisie par le joueur
 	    switch (userChoice) {
 	        case 1:
-	            // Attaquer avec l'arme
+	            // Combattre
 	            return determineCombatOutcome();
 
 	        case 2:
-	            // Utiliser une compétence spéciale (non implémenté pour l'instant)
-	        	return determineCombatOutcomeBonus();
+	            // Tenter de fuir
+	        	return determineCombatOutcomeEscape();
 
 	        default:
-	            System.out.println("Choix non valide. Choix de l'arme par défaut.");
+	            System.out.println("Choix non valide. Plus le choix, il faut combattre !");
 	            return determineCombatOutcome();
 	    }
 	}
@@ -76,25 +77,24 @@ public class CombatNode extends InnerNode {
 	    }
 	}
 	
-	private boolean determineCombatOutcomeBonus() {
-	    // Logique pour déterminer l'issue du combat en prenant en compte le bonus de powerLevel
-	    int playerTotalPowerLevel = player.getPowerLevel();
-
-	    if (opponent.getPowerLevel() > playerTotalPowerLevel) {
-	        Utils.displayText("Votre attaque n'a pas suffi ! L'adversaire contre-attaque !\n Vous êtes vaincu. Fin de l'histoire. ");
-	        return false;
+	private boolean determineCombatOutcomeEscape() {
+		Random random = new Random();
+		int randomChoice = random.nextInt(10);
+	    if (randomChoice < 4) {
+	        Utils.displayText("Vous n'avez pas réussi à fuir ! Vous êtes donc contraint de vous défendre... ");
+	        return determineCombatOutcome();
 	    } else {
-	        Utils.displayText("Vous remportez le combat ! L'adversaire est battu.");
+	        Utils.displayText("Vous parvenez à vous echapper ! Vous continuer votre aventure !");
 	        return true;
 	    }
 	}
 	
-	public void setNextNodes(List<Node> nextNodes) {
-		this.nextNodes = nextNodes;
-	}
+	//public void setNextNodes(List<Node> nextNodes) {
+		//this.nextNodes = nextNodes;
+	//}
 	
 	@Override
-    public Node chooseNext() {
+    public Event chooseNext() {
         return nextNodes.get(0);
     }
 	
