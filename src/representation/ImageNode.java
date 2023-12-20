@@ -21,8 +21,6 @@ import java.util.List;
  */
 public class ImageNode extends NodeDecorator {
 
-public class ImageNode extends NodeDecorator {
-    private ImagePath imagePath;
 
     /** Chemin vers l'image à afficher. */
     private ImagePath imagePath;
