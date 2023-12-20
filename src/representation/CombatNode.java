@@ -80,7 +80,9 @@ public class CombatNode extends InnerNode {
     public boolean combatNext() {
         // Affiche les informations sur l'opposant
         Utils.displayText("Vous êtes confronté à " + opponent.getName() + ", un redoutable ennemi !");
-        Utils.displayText("Votre Power Level : " + player.getPowerLevel());
+        Utils.displayText("Votre Power Level : " + player.getCharacter().getPowerLevel());
+        System.out.println(player.getCharacter().getClass());
+        System.out.println(player.getCharacter().getPowerLevel());
         Utils.displayText("Power Level de l'adversaire : " + opponent.getPowerLevel());
         if (player.getCharacter() instanceof PirateCaptain) {
 			Utils.displayText("PowerLevel de l'équipage : " + ((PirateCaptain) player.getCharacter()).getCrewPowerLevel());
@@ -122,7 +124,7 @@ public class CombatNode extends InnerNode {
     		System.out.println("oui");
 			crewPowerLevel = ((PirateCaptain) player.getCharacter()).getCrewPowerLevel();
 		}
-        if (opponent.getPowerLevel() > player.getPowerLevel() + crewPowerLevel) {
+        if (opponent.getPowerLevel() > player.getCharacter().getPowerLevel() + crewPowerLevel) {
             Utils.displayText("Votre attaque n'a pas suffi ! L'adversaire contre-attaque !\n Vous êtes vaincu. Fin de l'histoire. ");
             return false;
         } else {

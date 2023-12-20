@@ -32,6 +32,7 @@ public class PirateCaptain extends Pirate {
 
     public PirateCaptain(String name, int powerLevel, String crewName, List<Pirate> crewList) {
 		super(name, powerLevel);
+		this.powerLevel = 80;
 		this.crewName = crewName;
 		this.crewList = crewList;
 	}
