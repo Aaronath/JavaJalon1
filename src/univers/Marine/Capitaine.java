@@ -44,7 +44,17 @@ public class Capitaine extends MarineSoldier {
 		return teamList;
 	}
 
-	public void setCrewList(List<MarineSoldier> crewList) {
+	public void setTeamList(List<MarineSoldier> TeamList) {
 		this.teamList = teamList;
 	}
+	
+	public float getTeamPowerLevel() {
+    	float TeamPowerLevel = 0;
+    	
+		for (MarineSoldier TeamMember : teamList) {
+         TeamPowerLevel += TeamMember.getPowerLevel()/2;
+		}
+    	return TeamPowerLevel; 
+    }
+
 }
