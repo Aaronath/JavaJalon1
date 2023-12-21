@@ -127,7 +127,7 @@ public class Game implements Serializable {
         Event teamNode = new SoundNode (new ImageNode(new InnerNode(3, "Tu fais un choix judicieux !"
         		+ "Tu ne pourras pas être très puissant,\n"
         		+ "mais tu auras des alliés fidèles\n"
-        		+ " pour t'aider à tout instant !\n"),ImagePath.TEAM),AudioPath.OST);
+        		+ " pour t'aider à tout instant !\n"),ImagePath.TEAM),AudioPath.HAKI);
         Event missionNode = new InnerNode(4, "Un village se fait attaquer par des pirates.\n"
         		+ "Tu es immédiatement appeler en mission pour sauver ces innocents !");
         Event vsPirateNode = new SoundNode( new ImageNode(new CombatNodeMarine(5,"Tu arrives sur place,"
