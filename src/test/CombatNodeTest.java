@@ -130,34 +130,6 @@ class CombatNodeTest {
         assertTrue(nextEvent.toString().contains("1"));
     }
 
-    /*
-    @Test
-    void testDisplay() {
-        
-        
-        CombatNode combatNode = getCombatNode();
-
-        // Capture la sortie standard
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-
-        // Appelle la méthode display
-        combatNode.display();
-
-        // Restaure la sortie standard
-        System.setOut(System.out);
-
-        // Vérifie la sortie standard
-        String expectedOutput = "Vous êtes confronté à Test Pirate, un redoutable ennemi !";
-        expectedOutput += "\nVotre Power Level : 15";
-        expectedOutput += "\nPower Level de l'adversaire : 10";
-        expectedOutput += "\nChoisissez votre action :";
-        expectedOutput += "\n1. Combattre !";
-        expectedOutput += "\n2. Tenter de fuir ...";
-
-        assertTrue(outputStream.toString().contains(expectedOutput), "La sortie standard ne correspond pas aux attentes");
-    }*/
-    
     
     private CombatNode getCombatNode() {
     	PirateRookie opponent = new PirateRookie("Test Pirate", 10);  // Remplacez les valeurs par celles appropriées
