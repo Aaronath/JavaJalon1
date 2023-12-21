@@ -1,4 +1,4 @@
-# PirateFame
+# PirateGame
 
 Dans ce jeu, vous incarnez un jeune pirate ou un jeune soldat de la marine qui va vivre des aventures et gravir les échelons.
 
@@ -6,11 +6,18 @@ Dans ce jeu, vous incarnez un jeune pirate ou un jeune soldat de la marine qui v
 
 1. Assurez-vous d'avoir Java installé sur votre machine.
 2. Clonez le référentiel avec la commande suivante : git clone git@github.com:Aaronath/JavaJalon1.git
+
+### SANS SONS OU IMAGES
+
 3. Accédez au répertoire du projet :
    cd emplacement/de/votre/projet
 4. Compilez le code source : javac Main.java
 5. Exécutez l'application : java Main
 
+### AVEC SONS ET IMAGES
+
+1. Ouvrir le projet dans un IDE comme eclipse par exemple
+2. Run la classe Main
 
 ## Configuration de la partie
 
