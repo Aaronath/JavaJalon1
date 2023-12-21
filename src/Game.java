@@ -97,7 +97,7 @@ public class Game implements Serializable {
         Event monsterNode = new SoundNode(new ImageNode(new DecisionNode(5, "Un monstre marin surgit hors de l'eau ! Que vas-tu faire : \n 1) Fuir \n 2) Combattre"), ImagePath.MONSTER), AudioPath.BOUND);
         Event escapeMonsterNode = new InnerNode(6, "Le monstre a tout de même réussi à déchirer ta voile. Tu es à la dérive...");
         Event fightMonsterNode = new SoundNode( new ImageNode(new CombatNode(7, "A l'attaque !", null, monster, player), ImagePath.PUNCH), AudioPath.COMBAT);
-        Event islandNode = new ChanceNode(8, "Le courant te fais dériver mais miracle ! Terre en vue !");
+        Event islandNode = new ImageNode(new ChanceNode(8, "Le courant te fais dériver mais miracle ! Terre en vue !"), ImagePath.ISLAND);
         Event logueTownNode = new InnerNode(9, "Tu accostes à LogueTown, le repère des pirates !");
         Event whiskyPeakNode = new InnerNode(10, "Tu accostes à Whisky Peak, le repère des chasseurs de prime !");
         Event opponentNode = new SoundNode(new ImageNode(new CombatNode(12, "Tu fais face à ton ennemi juré : "+opponent.getName()+" !", opponent, player), ImagePath.OPPONENT), AudioPath.OPPONENT);
