@@ -1,5 +1,9 @@
 package univers.Marine;
 
+import java.util.List;
+
+import univers.Pirate.Pirate;
+
 /**
  * La classe Capitaine représente un soldat dans la marine, qui est une sous-classe de MarineSoldier.
  * Elle hérite des caractéristiques de base d'un soldat de la marine.
@@ -7,6 +11,8 @@ package univers.Marine;
  * @author Lévi Webert
  */
 public class Capitaine extends MarineSoldier {
+	private String teamName;
+	private List<MarineSoldier> teamList;// Nom de l'équipage dirigé par le capitaine.
 
     /**
      * Constructeur de la classe Capitaine.
@@ -14,9 +20,31 @@ public class Capitaine extends MarineSoldier {
      * @param name        Le nom du capitaine.
      * @param powerLevel  Le niveau de puissance du capitaine.
      */
-    public Capitaine(String name, int powerLevel) {
+    public Capitaine(String name, int powerLevel, String teamName) {
         super(name, powerLevel);
+        this.teamName = teamName;
     }
 
-    // Vous pouvez ajouter d'autres méthodes spécifiques à la classe Capitaine ici avec leurs commentaires Javadoc.
+    public Capitaine(String name, int powerLevel, String teamName, List<MarineSoldier> teamList) {
+		// TODO Auto-generated constructor stub
+    	super(name, powerLevel);
+        this.teamName = teamName;
+        this.teamList = teamList;
+	}
+
+	public String getTeamName() {
+		return teamName;
+	}
+
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
+	}
+
+	public List<MarineSoldier> getTeamList() {
+		return teamList;
+	}
+
+	public void setCrewList(List<MarineSoldier> crewList) {
+		this.teamList = teamList;
+	}
 }
