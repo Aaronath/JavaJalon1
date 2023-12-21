@@ -30,6 +30,7 @@ public class Game implements Serializable {
 
     public void configureGame() {
     	Monster monster = new Monster("Monstre", 40);
+    	PirateRookie opponent = new PirateRookie("Marshall.D.Teach", 80); 
         PirateRookie bestFriend = new PirateRookie("Ace", 40);
     	
     	currentNode = null;
@@ -99,6 +100,7 @@ public class Game implements Serializable {
         Event islandNode = new ChanceNode(8, "Le courant te fais dériver mais miracle ! Terre en vue !");
         Event logueTownNode = new InnerNode(9, "Tu accostes à LogueTown, le repère des pirates !");
         Event whiskyPeakNode = new InnerNode(10, "Tu accostes à Whisky Peak, le repère des chasseurs de prime !");
+        Event opponentNode = new SoundNode(new ImageNode(new CombatNode(12, "Tu fais face à ton ennemi juré : "+opponent.getName()+" !", opponent, player), ImagePath.OPPONENT), AudioPath.OPPONENT);
         Event terminalNode = new SoundNode( new TerminalNode(11, "Vous avez atteint l'objectif ultime : vous êtes le Pirate King ! Félicitations!"), AudioPath.BINKS);
 
         // Graphe de l'histoire
@@ -111,8 +113,9 @@ public class Game implements Serializable {
         fightMonsterNode.setNextNodes(Arrays.asList(escapeMonsterNode));
         escapeMonsterNode.setNextNodes(Arrays.asList(islandNode));
         islandNode.setNextNodes(Arrays.asList(logueTownNode, whiskyPeakNode));
-        logueTownNode.setNextNodes(Arrays.asList(terminalNode));
-        whiskyPeakNode.setNextNodes(Arrays.asList(terminalNode));
+        logueTownNode.setNextNodes(Arrays.asList(opponentNode));
+        whiskyPeakNode.setNextNodes(Arrays.asList(opponentNode));
+        opponentNode.setNextNodes(Arrays.asList(terminalNode));
 
 
         //Choix marine
