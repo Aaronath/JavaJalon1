@@ -10,7 +10,17 @@ public enum ImagePath {
     ORIGIN("src/images/"),
 
     /** Chemin vers le fichier image "test.png". */
-    TEST(ORIGIN.getPath() + "test.png");
+    OPPONENT(ORIGIN.getPath() + "opponent.jpeg"),
+    
+    BESTFRIEND(ORIGIN.getPath() + "bestFriend.png"),
+    
+    ISLAND(ORIGIN.getPath() + "islandChoice.jpeg"),
+    
+    SAVE(ORIGIN.getPath() + "save.jpeg"),
+    
+    MONSTER(ORIGIN.getPath() + "monster.jpeg"),
+    
+    PUNCH(ORIGIN.getPath() + "monsterPunched.jpeg");
 
     /** Le chemin vers le fichier image. */
     private final String path;

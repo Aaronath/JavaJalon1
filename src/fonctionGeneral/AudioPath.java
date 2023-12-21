@@ -11,6 +11,28 @@ public enum AudioPath {
 
     /** Chemin vers le fichier audio "1-up.wav". */
     JUMP(ORIGIN.getPath() + "1-up.wav"),
+    
+    OPPONENT(ORIGIN.getPath() + "opponent.wav"),
+    
+    COMIC(ORIGIN.getPath() + "comic.wav"),
+    
+    LASER(ORIGIN.getPath() + "laser.wav"),
+    
+    SECOND(ORIGIN.getPath() + "second.wav"),
+    
+    BOUND(ORIGIN.getPath() + "bound.wav"),
+    
+    ROOM(ORIGIN.getPath() + "room.wav"),
+    
+    HAKI(ORIGIN.getPath() + "haki.wav"),
+    
+    OST(ORIGIN.getPath() + "ost.wav"),
+    
+    WHOOSH(ORIGIN.getPath() + "whoosh.wav"),
+    
+    COMBAT(ORIGIN.getPath() + "combatSound.wav"),
+    
+    BINKS(ORIGIN.getPath() + "binks.wav"),
 
     /** Chemin vers le fichier audio "game-over.wav". */
     GAMEOVER(ORIGIN.getPath() + "game-over.wav"),

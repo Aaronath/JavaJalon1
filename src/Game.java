@@ -89,29 +89,26 @@ public class Game implements Serializable {
     	
     	
      // Création des Nodes relatives au choix Pirate
-        Event bestFriendNode = new CrewNode(1, "Veux-tu faire ton aventure : \n 1) En solo \n 2) Avec ton meilleur ami", bestFriend, player);
-        Event soloNode = new InnerNode(2, "Tu es donc solo ! Tu pars en mer à bord de ton radeau !");
-        Event snNode = new ImageNode(soloNode, ImagePath.TEST);
-        Event duoNode = new InnerNode(3, "Tu as raison, l'aventure c'est toujours mieux avec un ami !");
-        Event dnNode = new SoundNode(duoNode, AudioPath.FINALEND);
+        Event bestFriendNode = new SoundNode(new ImageNode(new CrewNode(1, "Veux-tu faire ton aventure : \n 1) En solo \n 2) Avec ton meilleur ami", bestFriend, player), ImagePath.BESTFRIEND), AudioPath.OST);
+        Event soloNode =  new SoundNode(new InnerNode(2, "Tu es donc solo ! Tu pars en mer à bord de ton radeau !"), AudioPath.COMIC);
+        Event duoNode = new SoundNode(new InnerNode(3, "Tu as raison, l'aventure c'est toujours mieux avec un ami !"), AudioPath.HAKI);
         Event saveNode = new SaveNode(4, "Veux-tu sauvegarder ta partie ?");
-        Event monsterNode = new DecisionNode(5, "Un monstre marin surgit hors de l'eau ! Que vas-tu faire : \n 1) Fuir \n 2) Combattre");
+        Event monsterNode = new SoundNode(new ImageNode(new DecisionNode(5, "Un monstre marin surgit hors de l'eau ! Que vas-tu faire : \n 1) Fuir \n 2) Combattre"), ImagePath.MONSTER), AudioPath.BOUND);
         Event escapeMonsterNode = new InnerNode(6, "Le monstre a tout de même réussi à déchirer ta voile. Tu es à la dérive...");
-        Event fightMonsterNode = new CombatNode(7, "A l'attaque !", null, monster, player);
-        Event fmSoundNode = new SoundNode(fightMonsterNode, AudioPath.JUMP);
+        Event fightMonsterNode = new SoundNode( new ImageNode(new CombatNode(7, "A l'attaque !", null, monster, player), ImagePath.PUNCH), AudioPath.COMBAT);
         Event islandNode = new ChanceNode(8, "Le courant te fais dériver mais miracle ! Terre en vue !");
         Event logueTownNode = new InnerNode(9, "Tu accostes à LogueTown, le repère des pirates !");
         Event whiskyPeakNode = new InnerNode(10, "Tu accostes à Whisky Peak, le repère des chasseurs de prime !");
-        Event terminalNode = new TerminalNode(11, "Vous avez atteint l'objectif ultime : vous êtes le Pirate King ! Félicitations!");
+        Event terminalNode = new SoundNode( new TerminalNode(11, "Vous avez atteint l'objectif ultime : vous êtes le Pirate King ! Félicitations!"), AudioPath.BINKS);
 
         // Graphe de l'histoire
         startNodePirate.setNextNodes(Arrays.asList(bestFriendNode));
-        bestFriendNode.setNextNodes(Arrays.asList(snNode, dnNode));
-        snNode.setNextNodes(Arrays.asList(saveNode));
-        dnNode.setNextNodes(Arrays.asList(saveNode));
+        bestFriendNode.setNextNodes(Arrays.asList(soloNode, duoNode));
+        soloNode.setNextNodes(Arrays.asList(saveNode));
+        duoNode.setNextNodes(Arrays.asList(saveNode));
         saveNode.setNextNodes(Arrays.asList(monsterNode));
-        monsterNode.setNextNodes(Arrays.asList(escapeMonsterNode, fmSoundNode));
-        fmSoundNode.setNextNodes(Arrays.asList(escapeMonsterNode));
+        monsterNode.setNextNodes(Arrays.asList(escapeMonsterNode, fightMonsterNode));
+        fightMonsterNode.setNextNodes(Arrays.asList(escapeMonsterNode));
         escapeMonsterNode.setNextNodes(Arrays.asList(islandNode));
         islandNode.setNextNodes(Arrays.asList(logueTownNode, whiskyPeakNode));
         logueTownNode.setNextNodes(Arrays.asList(terminalNode));

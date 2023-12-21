@@ -31,7 +31,10 @@ public class SoundNode extends NodeDecorator {
      */
     @Override
     public void display() {
-        playSound();
+        // Utilisation d'un thread pour jouer le son de manière asynchrone
+        Thread soundThread = new Thread(() -> playSound());
+        soundThread.start();
+
         super.display();
     }
 
@@ -44,8 +47,8 @@ public class SoundNode extends NodeDecorator {
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
-            Thread.sleep(clip.getMicrosecondLength() / 1000);
-        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException e) {
+            // Pas besoin de Thread.sleep ici pour permettre à la lecture de continuer en arrière-plan
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             e.printStackTrace();
         }
     }

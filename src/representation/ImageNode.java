@@ -53,7 +53,7 @@ public class ImageNode extends NodeDecorator {
 
             // Crée une fenêtre JFrame pour afficher l'image
             JFrame frame = new JFrame();
-            frame.setTitle("Image Display");
+            frame.setTitle(((Node) super.getDecoratedEvent()).getDescription());
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
             // Crée un JLabel pour afficher l'image
@@ -78,7 +78,7 @@ public class ImageNode extends NodeDecorator {
             frame.setVisible(true);
 
             // Crée un timer pour fermer la fenêtre après 4 secondes
-            Timer timer = new Timer(3000, new ActionListener() {
+            Timer timer = new Timer(5000, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     frame.dispose(); // Ferme la fenêtre
