@@ -16,13 +16,13 @@ import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 import fonctionGeneral.Utils;
 
 /**
- * La classe CrewNode représente un nœud de décision permettant au joueur de recruter
+ * La classe TeamNode représente un nœud de décision permettant au joueur de recruter
  * ou non un nouveau membre d'équipage.
  * 
  * Si le joueur n'est pas déjà un capitaine pirate, il devient un PirateCaptain,
- * et le personnage recruté (qui peut être un PirateRookie) est ajouté à sa crewList.
+ * et le personnage recruté (qui peut être un Matelot) est ajouté à sa TeamList.
  * 
- * @author Nathan Halioua
+ * @author Lévi Webert
  */
 public class TeamNode extends DecisionNode {
 	private MarineSoldier teamNew;

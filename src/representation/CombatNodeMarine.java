@@ -133,7 +133,7 @@ public class CombatNodeMarine extends InnerNode {
 
     	    // Augmentez les chances de victoire si la séquence a été tapée avec succès
     	    if (typedSuccessfully) {
-    	        teamPowerLevel += 10; // Vous pouvez ajuster le montant en conséquence
+    	        teamPowerLevel += 30; // Vous pouvez ajuster le montant en conséquence
     	    }
 
     	    if (opponent.getPowerLevel() > player.getCharacter().getPowerLevel() + teamPowerLevel) {
@@ -175,7 +175,7 @@ public class CombatNodeMarine extends InnerNode {
 
     	    long elapsedTime = System.currentTimeMillis() - startTime;
 
-    	    if (userTypedSequence.equals(sequenceToType) && elapsedTime < 3000) { // Vous pouvez ajuster le temps maximal autorisé
+    	    if (userTypedSequence.equals(sequenceToType) && elapsedTime < 10000) { // Vous pouvez ajuster le temps maximal autorisé
     	        Utils.displayText("Bien joué ! Vous avez tapé la séquence rapidement !");
     	        return true;
     	    } else {

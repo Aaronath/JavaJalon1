@@ -89,7 +89,7 @@ public class Game implements Serializable {
     	
     	
     	
-     // Création des Nodes relatives au choix Pirate
+        // Création des Nodes relatives au choix Pirate
         Event bestFriendNode = new SoundNode(new ImageNode(new CrewNode(1, "Veux-tu faire ton aventure : \n 1) En solo \n 2) Avec ton meilleur ami", bestFriend, player), ImagePath.BESTFRIEND), AudioPath.OST);
         Event soloNode =  new SoundNode(new InnerNode(2, "Tu es donc solo ! Tu pars en mer à bord de ton radeau !"), AudioPath.COMIC);
         Event duoNode = new SoundNode(new InnerNode(3, "Tu as raison, l'aventure c'est toujours mieux avec un ami !"), AudioPath.HAKI);
@@ -120,17 +120,18 @@ public class Game implements Serializable {
 
         //Choix marine
         
-        Event soloNode2 = new InnerNode(2, "Tu préfères donc la voie de  et de la puissance !\n"
+        Event saveNodeMarine = new SaveNode(4, "Veux-tu sauvegarder ta partie marin des mers ?");
+        Event soloNodeMarine = new SoundNode(new ImageNode(new PowerUpNode(2, "Tu préfères donc la voie de  et de la puissance !\n"
         		+ "\nTu es tomber sur un power up !\n"
-        		+ "\nTu commences par un entrainement très difficile !\n");
-        Event teamNode = new InnerNode(3, "Tu fais un choix judicieux !"
+        		+ "\nTu commences par un entrainement très difficile !\n",null,50), ImagePath.SOLO), AudioPath.POWERUP);
+        Event teamNode = new SoundNode (new ImageNode(new InnerNode(3, "Tu fais un choix judicieux !"
         		+ "Tu ne pourras pas être très puissant,\n"
         		+ "mais tu auras des alliés fidèles\n"
-        		+ " pour t'aider à tout instant !\n");
+        		+ " pour t'aider à tout instant !\n"),ImagePath.TEAM),AudioPath.OST);
         Event missionNode = new InnerNode(4, "Un village se fait attaquer par des pirates.\n"
         		+ "Tu es immédiatement appeler en mission pour sauver ces innocents !");
-        Event vsPirateNode = new CombatNode(5,"Tu arrives sur place,"
-        		+ "un pirate te barre la route, tu le combat vigoureusement !",null,monster,player) ;
+        Event vsPirateNode = new SoundNode( new ImageNode(new CombatNodeMarine(5,"Tu arrives sur place,"
+        		+ "un pirate te barre la route, tu le combat vigoureusement !",null,monster,player), ImagePath.PIRATE), AudioPath.COMBAT);
         Event heroNode = new DecisionNode(6,"Tu es gravement blessé, tu as besoin de soin d'urgence.\n"
         		+ "Soudain un garçon te barre la route, te supplie d'aller aider sa mère\n"
         		+ " qui se fait violencer par un pirate.\n"
@@ -155,9 +156,10 @@ public class Game implements Serializable {
 
                 
         //Graphe de l'histoire marine
-        startNodeMarine.setNextNodes(Arrays.asList(soloNode2, teamNode));
-        soloNode2.setNextNodes(Arrays.asList(missionNode));
-        teamNode.setNextNodes(Arrays.asList(missionNode));
+        startNodeMarine.setNextNodes(Arrays.asList(soloNodeMarine, teamNode));
+        soloNodeMarine.setNextNodes(Arrays.asList(saveNodeMarine));
+        teamNode.setNextNodes(Arrays.asList(saveNodeMarine));
+        saveNodeMarine.setNextNodes(Arrays.asList(missionNode));
         missionNode.setNextNodes(Arrays.asList(vsPirateNode));
         vsPirateNode.setNextNodes(Arrays.asList(heroNode));
         heroNode.setNextNodes(Arrays.asList(momNode,deathNode));

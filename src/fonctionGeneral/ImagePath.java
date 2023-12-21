@@ -12,6 +12,12 @@ public enum ImagePath {
     /** Chemin vers le fichier image "test.png". */
     OPPONENT(ORIGIN.getPath() + "opponent.jpeg"),
     
+    SOLO(ORIGIN.getPath() + "AventureSolo.png"),
+    
+    TEAM(ORIGIN.getPath() + "AventureTeam.png"),
+    
+    PIRATE(ORIGIN.getPath() + "PirateEnnemi.png"),
+    
     BESTFRIEND(ORIGIN.getPath() + "bestFriend.png"),
     
     ISLAND(ORIGIN.getPath() + "islandChoice.jpeg"),
