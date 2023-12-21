@@ -12,8 +12,9 @@ class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Game game = null;
-
-        while (true) {
+        boolean exit = false;
+        
+        while (!exit) {
             System.out.println("Menu :");
             System.out.println("1. Nouvelle Partie");
             System.out.println("2. Charger Partie");
@@ -33,7 +34,7 @@ class Main {
                     break;
                 case 3:
                     System.out.println("Au revoir !");
-                    System.exit(0);
+                    exit = true;
                     break;
                 default:
                     System.out.println("Choix non valide. Veuillez choisir à nouveau.");
