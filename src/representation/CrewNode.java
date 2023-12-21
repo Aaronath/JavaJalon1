@@ -83,6 +83,7 @@ public class CrewNode extends DecisionNode {
             // Si le joueur n'est pas déjà un PirateCaptain
             List<Pirate> crewList = new ArrayList<>();
         	player.setCharacter(new PirateCaptain(player.getName(), player.getPowerLevel(), crewName, crewList));
+        	Utils.displayText("Tu es désormais Capitaine ! Tes stats ont augmentées !");
         	recruitCrewMember();
         }
     }

@@ -1,4 +1,18 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 import fonctionGeneral.AudioPath;
@@ -10,7 +24,7 @@ import univers.Marine.NouvelleRecrue;
 import univers.Pirate.Monster;
 import univers.Pirate.*;
 
-class Game {
+public class Game implements Serializable {
     private Player player;
     private Event currentNode;
 
@@ -74,33 +88,35 @@ class Game {
     	
     	
     	
-    	//Création des Nodes relatives au choix Pirate
-        Event bestFriendNode = new CrewNode(1,"Veux-tu faire ton aventure : \n 1) En solo \n 2) Avec ton meilleur ami", bestFriend, player );
+     // Création des Nodes relatives au choix Pirate
+        Event bestFriendNode = new CrewNode(1, "Veux-tu faire ton aventure : \n 1) En solo \n 2) Avec ton meilleur ami", bestFriend, player);
         Event soloNode = new InnerNode(2, "Tu es donc solo ! Tu pars en mer à bord de ton radeau !");
         Event snNode = new ImageNode(soloNode, ImagePath.TEST);
         Event duoNode = new InnerNode(3, "Tu as raison, l'aventure c'est toujours mieux avec un ami !");
         Event dnNode = new SoundNode(duoNode, AudioPath.FINALEND);
-        Event monsterNode = new DecisionNode(4, "Un monstre marin surgit hors de l'eau ! Que vas-tu faire : \n 1) Fuir \n 2) Combattre");
-        Event escapeMonsterNode = new InnerNode(5, "Le monstre a tout de même réussi à déchirer ta voile. Tu es à la dérive...");
-        Event fightMonsterNode = new CombatNode(6, "A l'attaque !", null, monster, player);
+        Event saveNode = new SaveNode(4, "Veux-tu sauvegarder ta partie ?");
+        Event monsterNode = new DecisionNode(5, "Un monstre marin surgit hors de l'eau ! Que vas-tu faire : \n 1) Fuir \n 2) Combattre");
+        Event escapeMonsterNode = new InnerNode(6, "Le monstre a tout de même réussi à déchirer ta voile. Tu es à la dérive...");
+        Event fightMonsterNode = new CombatNode(7, "A l'attaque !", null, monster, player);
         Event fmSoundNode = new SoundNode(fightMonsterNode, AudioPath.JUMP);
-        Event islandNode = new ChanceNode(7, "Le courant te fais dérivé mais miracle ! Terre en vue !");
-        Event logueTownNode = new InnerNode(8, "Tu accostes à LogueTown,le repère des pirates !");
-        Event whiskyPeakNode = new InnerNode(8, "Tu accostes à Whisky Peak,le repère des chasseurs de prime !");
-        Event terminalNode = new TerminalNode(14, "Vous avez atteint l'objectif ultime : vous êtes le Pirate King ! Félicitations !");
-        
-                 
-        //Graphe de l'histoire
+        Event islandNode = new ChanceNode(8, "Le courant te fais dériver mais miracle ! Terre en vue !");
+        Event logueTownNode = new InnerNode(9, "Tu accostes à LogueTown, le repère des pirates !");
+        Event whiskyPeakNode = new InnerNode(10, "Tu accostes à Whisky Peak, le repère des chasseurs de prime !");
+        Event terminalNode = new TerminalNode(11, "Vous avez atteint l'objectif ultime : vous êtes le Pirate King ! Félicitations!");
+
+        // Graphe de l'histoire
         startNodePirate.setNextNodes(Arrays.asList(bestFriendNode));
         bestFriendNode.setNextNodes(Arrays.asList(snNode, dnNode));
-        snNode.setNextNodes(Arrays.asList(monsterNode));
-        dnNode.setNextNodes(Arrays.asList(monsterNode));
+        snNode.setNextNodes(Arrays.asList(saveNode));
+        dnNode.setNextNodes(Arrays.asList(saveNode));
+        saveNode.setNextNodes(Arrays.asList(monsterNode));
         monsterNode.setNextNodes(Arrays.asList(escapeMonsterNode, fmSoundNode));
         fmSoundNode.setNextNodes(Arrays.asList(escapeMonsterNode));
         escapeMonsterNode.setNextNodes(Arrays.asList(islandNode));
         islandNode.setNextNodes(Arrays.asList(logueTownNode, whiskyPeakNode));
         logueTownNode.setNextNodes(Arrays.asList(terminalNode));
         whiskyPeakNode.setNextNodes(Arrays.asList(terminalNode));
+
 
         //Choix marine
         
@@ -152,10 +168,90 @@ class Game {
         // Simulation de l'histoire
         while (!(currentNode instanceof TerminalNode)) {
             currentNode.display();
-            currentNode = currentNode.chooseNext();
+
+            if (currentNode instanceof SaveNode) {
+                // Si le nœud actuel est un SaveNode, affiche le choix de sauvegarde
+                currentNode = ((SaveNode) currentNode).chooseNext(this);
+            } else {
+                currentNode = currentNode.chooseNext();
+            }
         }
 
         // Affiche le nœud terminal final
         currentNode.display();
+    }
+
+    public void saveGame() {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(getSaveFileName()))) {
+            outputStream.writeObject(this);
+            System.out.println("Partie sauvegardée avec succès.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getSaveFileName() {
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy 'à' HH_mm_ss", Locale.FRENCH);
+        String formattedDate = dateFormat.format(now);
+        return "savegame_" + formattedDate + ".ser";
+    }
+
+
+    public static List<String> listSaves() {
+        File savesDirectory = new File(".");
+        File[] saveFiles = savesDirectory.listFiles((dir, name) -> name.startsWith("savegame_") && name.endsWith(".ser"));
+
+        if (saveFiles == null) {
+            return Collections.emptyList();
+        }
+
+        Arrays.sort(saveFiles, Comparator.comparingLong(File::lastModified).reversed());
+
+        List<String> saveFileNames = new ArrayList<>();
+        for (File saveFile : saveFiles) {
+            saveFileNames.add(saveFile.getName());
+        }
+
+        return saveFileNames;
+    }
+
+    public static Game loadGame(String saveFileName) {
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(saveFileName))) {
+            return (Game) inputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+}
+
+class SaveNode extends DecisionNode {
+    public SaveNode(int id, String description) {
+        super(id, description);
+    }
+
+    public Event chooseNext(Game game) {
+        // Affiche les options disponibles
+        System.out.println("Choisissez une option :");
+        System.out.println("1. Continuer l'aventure");
+        System.out.println("2. Sauvegarder et quitter");
+
+        Scanner scanner = new Scanner(System.in);
+        int userChoice = scanner.nextInt();
+
+        switch (userChoice) {
+            case 1:
+                return nextNodes.get(0); // Continuer l'aventure
+
+            case 2:
+                game.saveGame(); // Sauvegarder et quitter
+                System.out.println("Partie sauvegardée avec succès. Merci d'avoir joué !");
+                System.exit(0);
+
+            default:
+                System.out.println("Choix non valide. Veuillez choisir à nouveau.");
+                return this;
+        }
     }
 }

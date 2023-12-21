@@ -1,5 +1,7 @@
 package univers;
 
+import java.io.Serializable;
+
 import fonctionGeneral.Utils;
 import univers.Pirate.Monster;
 
@@ -10,7 +12,7 @@ import univers.Pirate.Monster;
  * 
  * @author [Votre Nom]
  */
-public class Player implements PowerLevel {
+public class Player implements PowerLevel, Serializable {
 
     /** Le nom du joueur. */
     private String name;
