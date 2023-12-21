@@ -1,10 +1,12 @@
 package representation;
 
+import java.io.Serializable;
+
 /**
  * La classe abstraite NodeDecorator est une représentation générique d'un décorateur de nœud dans une structure d'arbre narratif.
  * Elle implémente l'interface Event, fournissant des méthodes pour afficher le nœud décoré et choisir le prochain événement dans le déroulement de l'histoire.
  */
-public abstract class NodeDecorator implements Event {
+public abstract class NodeDecorator implements Event, Serializable {
 
     /** Le nœud décoré par le décorateur. */
     protected Event decoratedEvent;

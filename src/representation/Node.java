@@ -1,11 +1,13 @@
 package representation;
 
+import java.io.Serializable;
+
 /**
  * La classe abstraite Node est une représentation générique d'un nœud dans une structure d'arbre narratif.
  * Elle implémente l'interface Event, fournissant des méthodes de base pour afficher le nœud, obtenir sa description,
  * et déterminer le prochain événement dans le déroulement de l'histoire.
  */
-public abstract class Node implements Event {
+public abstract class Node implements Event, Serializable {
 
     /** L'identifiant unique du nœud. */
     protected int id;
