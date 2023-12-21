@@ -29,7 +29,7 @@ class CombatNodeTest {
     @Test
     void testGetOpponent() {
         PirateRookie opponent = new PirateRookie("Test Pirate", 10);
-        Player player = new Player("Test",new Capitaine("Test Player", 15));
+        Player player = new Player("Test",new Matelot("Test Player", 15));
         CombatNode combatNode = new CombatNode(1, "Test Combat Node", opponent, player);
         assertEquals(opponent, combatNode.getOpponent());
     }
@@ -37,7 +37,7 @@ class CombatNodeTest {
     @Test
     void testSetOpponent() {
     	PirateRookie opponent = new PirateRookie("Test Pirate", 10);
-        Player player = new Player("Test",new Capitaine("Test Player", 15));
+        Player player = new Player("Test",new Matelot("Test Player", 15));
         CombatNode combatNode = new CombatNode(1, "Test Combat Node", opponent, player);
 
         PirateRookie newOpponent = new PirateRookie("New Test Pirate", 20);
@@ -49,7 +49,7 @@ class CombatNodeTest {
     @Test
     void testCombatNext() {
         PirateRookie opponent = new PirateRookie("Test Pirate", 10);
-        Player player = new Player("Test", new Capitaine("Test Player", 15));
+        Player player = new Player("Test", new Matelot("Test Player", 15));
         CombatNode combatNode = new CombatNode(1, "Test Combat Node", opponent, player);
 
         // Redirect System.in to provide input for the test
@@ -84,7 +84,7 @@ class CombatNodeTest {
     @Test
     void testCombatNextDetermineCombatOutcome() {
         PirateRookie opponent = new PirateRookie("Test Pirate", 10);
-        Player player = new Player("Test", new Capitaine("Test Player", 15));
+        Player player = new Player("Test", new Matelot("Test Player", 15));
         CombatNode combatNode = new CombatNode(1, "Test Combat Node", opponent, player);
 
         // Redirect System.in to provide input for the test
@@ -120,7 +120,7 @@ class CombatNodeTest {
     @Test
     void testChooseNext() {
     	PirateRookie opponent = new PirateRookie("Test Pirate", 10);
-        Player player = new Player("Test",new Capitaine("Test Player", 15));
+        Player player = new Player("Test",new Matelot("Test Player", 15));
         CombatNode combatNode = new CombatNode(1, "Test Combat Node", opponent, player);
         InnerNode in = new InnerNode(1,"Test");
         combatNode.setNextNodes(Arrays.asList(in));       // Assuming that the CombatNode has only one next node
@@ -133,7 +133,7 @@ class CombatNodeTest {
     
     private CombatNode getCombatNode() {
     	PirateRookie opponent = new PirateRookie("Test Pirate", 10);  // Remplacez les valeurs par celles appropriées
-        Player player = new Player("Test",new Capitaine("Test Player", 15));  // Remplacez les valeurs par celles appropriées
+        Player player = new Player("Test",new Matelot("Test Player", 15));  // Remplacez les valeurs par celles appropriées
         CombatNode combatNode = new CombatNode(1, "Test Combat Node", opponent, player);
         return combatNode;
     }
