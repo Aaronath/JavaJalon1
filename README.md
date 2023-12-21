@@ -24,8 +24,6 @@ Expliquez ici comment configurer une nouvelle partie ou charger une partie exist
 
 ## Structure du Projet
 
-Expliquez brièvement la structure de votre projet. Par exemple :
-
 - `src/` : Contient le code source Java.
 - `images/` : Stocke les images utilisées dans le jeu.
 - `sounds/` : Stocke les fichiers audio utilisés dans le jeu.
