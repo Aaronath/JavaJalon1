@@ -123,7 +123,7 @@ public class Game implements Serializable {
         Event saveNodeMarine = new SaveNode(4, "Veux-tu sauvegarder ta partie marin des mers ?");
         Event soloNodeMarine = new SoundNode(new ImageNode(new PowerUpNode(2, "Tu préfères donc la voie de  et de la puissance !\n"
         		+ "\nTu es tomber sur un power up !\n"
-        		+ "\nTu commences par un entrainement très difficile !\n",null,50), ImagePath.SOLO), AudioPath.POWERUP);
+        		+ "\nTu commences par un entrainement très difficile !\n",null,50, player), ImagePath.SOLO), AudioPath.POWERUP);
         Event teamNode = new SoundNode (new ImageNode(new InnerNode(3, "Tu fais un choix judicieux !"
         		+ "Tu ne pourras pas être très puissant,\n"
         		+ "mais tu auras des alliés fidèles\n"
