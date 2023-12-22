@@ -1,3 +1,7 @@
+/**
+ * Contient les tests du programme.
+ * @since 1.0
+ */
 package test;
 
 import org.junit.jupiter.api.Test;

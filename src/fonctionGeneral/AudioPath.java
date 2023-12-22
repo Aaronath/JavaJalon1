@@ -1,3 +1,7 @@
+/**
+ * Contient les classes des fonctions utilisées dans le programme.
+ * @since 1.0
+ */
 package fonctionGeneral;
 
 /**

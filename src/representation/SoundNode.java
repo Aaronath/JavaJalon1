@@ -1,3 +1,7 @@
+/**
+ * Contient les classes des différents nodes utilisés dans le programme.
+ * @since 1.0
+ */
 package representation;
 
 import javax.sound.sampled.*;

@@ -1,3 +1,7 @@
+/**
+ * Contient les classes univers du programme.
+ * @since 1.0
+ */
 package univers.Marine;
 /**
  * A Amiral is a soldier in the navy.
