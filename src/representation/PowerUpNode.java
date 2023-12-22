@@ -4,17 +4,22 @@ import java.util.List;
 import java.util.Scanner;
 
 import fonctionGeneral.Utils;
+import univers.Player;
 
 public class PowerUpNode extends InnerNode {
-	
-	float powerUp=0;
+	private Player player;
+	private int powerUp=0;
 
-	public PowerUpNode(int id, String description, List<Event> nextNodes, float powerUp) {
+	public PowerUpNode(int id, String description, List<Event> nextNodes, int powerUp, Player player) {
 		super(id, description, nextNodes);
 		this.powerUp = powerUp;	
+		this.player = player;
 	}
 	
-	
+	public void upgradePowerLevel() {
+		Utils.displayText("Vous gagnez un powerUp de "+powerUp);
+		player.getCharacter().setPowerLevel(player.getCharacter().getPowerLevel() + powerUp);
+	}
 	/**
      * Affiche le powerUp du personnage
      *
@@ -22,8 +27,8 @@ public class PowerUpNode extends InnerNode {
      */
     @Override
     public Event chooseNext() {
-    		Utils.displayText("Vous gagnez un powerUp de "+powerUp);
-        	return super.chooseNext();    
-        }
+    	upgradePowerLevel();
+    	return super.chooseNext();    
+    }
 
 }
